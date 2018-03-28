@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('test5 App', () => {
+describe('testnet App', () => {
   let page: AppPage;
 
   beforeEach(() => {
