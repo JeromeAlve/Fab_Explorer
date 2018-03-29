@@ -69,8 +69,8 @@
           <th scope="col">Confirmations</th>
         </tr>
       </thead>
-      <tbody>
-        <tr class="text-center" *ngFor="let block of curFiveBlocks">
+      <tbody >
+        <tr class="text-center" *ngFor="let block of curFiveBlocks" >
           <th scope="row">
             <a href="#" (click)="blockClicked(block.height)">{{block.height}} </a>
           </th>
@@ -191,13 +191,16 @@
       <li class="list-group-item">
           <h3 class="text-center" >Transactions</h3>
           <ul class="list-group">
-            <li class="list-group-item" *ngFor="let tx of myBlockInfo.tx">
-              <ul class="list-group">
-                <li class="list-group-item text-truncate"> Transaction Id :
-                  <a href="#" (click)="TxFromBlockClicked(tx.txid)" > {{tx.txid  }}</a>
+            <li class="list-group-item text-truncate text-center"  *ngFor="let t of currentBlock.tx; let i = index" [attr.data-index]="i">
+
+              {{i}}.   &nbsp; &nbsp;&nbsp;&nbsp; <a href="#" (click)="TxFromBlockClicked(t.txid)" > {{t.txid  }}</a>
+            <!--  <ul class="list-group">
+                <li class="list-group-item text-truncate"> Transaction Id : {{i}}
+                  <a href="#" (click)="TxFromBlockClicked(t.txid)" > {{t.txid  }}</a>
                 </li>
-                <li class="list-group-item text-truncate">Hash : {{tx.hash }}</li>
-              </ul>
+                <li class="list-group-item text-truncate">Hash : {{t.hash }}</li>
+              </ul> -->
+
             </li>
           </ul>
         </li>

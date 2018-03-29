@@ -152,6 +152,14 @@ export class AppComponent {
           this.nextBlock = undefined;
         }
 
+        //Transactions are read into the block
+       /* var k = this.currentBlock.tx.length
+
+        for(var l = 0; l < k; l++)
+        {
+          console.log(this.currentBlock.tx[l].txid)
+        }*/
+
         break;
       }
     }
