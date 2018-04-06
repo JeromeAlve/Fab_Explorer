@@ -276,6 +276,19 @@ export class AppComponent {
       this.currentBlock = data;
       this.isBlockViewActive = true;
 
+      
+      this.dataService.getBlockInfo(this.currentBlock.previousblockhash).subscribe(
+        data => {
+          this.previousBlock = data;
+          this.previousBlock.date = new Date(this.previousBlock.time * 1000)
+        })
+
+        this.dataService.getBlockInfo(this.currentBlock.nextblockhash).subscribe(data => {
+          this.nextBlock = data
+          this.nextBlock.date = new Date(this.currentBlock.time * 1000)
+        })
+
+      
       console.log(data)
 
     })
