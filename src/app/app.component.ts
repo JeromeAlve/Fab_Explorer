@@ -45,7 +45,7 @@ export class AppComponent {
   curFiveBlocks: blockInfo[] = []; //For Dispaly Purposes
 
   configURL: string = 'http://35.182.160.212:18667/rest/'; //testnet
- // configURL: string = 'http://18.130.8.117:8667/rest/'; //MainNet
+  // configURL: string = 'http://18.130.8.117:8667/rest/'; //MainNet
 
 
   // /date = new Date(unix_timestamp*1000);
@@ -74,7 +74,7 @@ export class AppComponent {
           this.dataService.getChainInfo().subscribe(async myChainInfo => {
             this.myChainInfo = myChainInfo
             await this.setCurrentBlock(this.myChainInfo.bestblockhash);
-          
+
             // this function should be called only when user requests for the latest blocks
             // await this.setCurFiveBlocks();
           });
@@ -103,11 +103,11 @@ export class AppComponent {
   }
 
 
-  setTransactionInfo(tId : string) {
+  setTransactionInfo(tId: string) {
 
     this.myTransactionInfo = null;
-    
-    this.dataService.getTxInfo(tId).subscribe(data=>{
+
+    this.dataService.getTxInfo(tId).subscribe(data => {
 
       this.myTransactionInfo = data
 
@@ -115,7 +115,7 @@ export class AppComponent {
 
   }
 
-  TxFromBlockClicked(tId : string){
+  TxFromBlockClicked(tId: string) {
 
     this.setTransactionInfo(tId)
 
@@ -182,11 +182,19 @@ export class AppComponent {
           this.previousBlock.date = new Date(this.previousBlock.time * 1000)
         }))
 
-      await (this.dataService.getBlockInfo(this.currentBlock.nextblockhash).subscribe(
-        data => {
-          this.nextBlock = data;
-          this.nextBlock.date = new Date(this.nextBlock.time * 1000)
-        }))
+
+      if (this.currentBlock.nextblockhash) {
+        this.dataService.getBlockInfo(this.currentBlock.nextblockhash).subscribe(
+          data => {
+            this.nextBlock = data;
+            this.nextBlock.date = new Date(this.nextBlock.time * 1000)
+          })
+      }
+      else {
+        this.nextBlock = null
+      }
+
+      
     })
 
 
@@ -215,7 +223,7 @@ export class AppComponent {
     this.isBiActive = false
     this.isTiActive = false
 
-    let elem : HTMLElement = document.getElementById('tgl') as HTMLElement;
+    let elem: HTMLElement = document.getElementById('tgl') as HTMLElement;
     elem.click();
 
 
@@ -234,16 +242,16 @@ export class AppComponent {
     this.isTiActive = false
 
 
-    let elem : HTMLElement = document.getElementById('tgl') as HTMLElement;
+    let elem: HTMLElement = document.getElementById('tgl') as HTMLElement;
     elem.click();
   }
 
 
-  searchBlockClicked(){
+  searchBlockClicked() {
 
 
-  //  this.myBlockInfo = null;
-  //  this.currentBlock = null;
+    //  this.myBlockInfo = null;
+    //  this.currentBlock = null;
 
     this.isBiActive = true;
     this.isBlockTableActive = false;
@@ -251,12 +259,12 @@ export class AppComponent {
     this.isTiActive = false
     this.isChainInfoActive = false
 
-    let elem : HTMLElement = document.getElementById('tgl') as HTMLElement;
+    let elem: HTMLElement = document.getElementById('tgl') as HTMLElement;
     elem.click();
   }
 
-  searchTransactionClicked(){
-    
+  searchTransactionClicked() {
+
     this.myTransactionInfo = null;
 
     this.isBiActive = false;
@@ -266,29 +274,29 @@ export class AppComponent {
     this.isChainInfoActive = false
 
 
-    let elem : HTMLElement = document.getElementById('tgl') as HTMLElement;
+    let elem: HTMLElement = document.getElementById('tgl') as HTMLElement;
     elem.click();
   }
 
-  searchBlockById(bId : string){
+  searchBlockById(bId: string) {
 
-    this.dataService.getBlockInfo(bId).subscribe(data=>{
+    this.dataService.getBlockInfo(bId).subscribe(data => {
       this.currentBlock = data;
       this.isBlockViewActive = true;
 
-      
+
       this.dataService.getBlockInfo(this.currentBlock.previousblockhash).subscribe(
         data => {
           this.previousBlock = data;
           this.previousBlock.date = new Date(this.previousBlock.time * 1000)
         })
 
-        this.dataService.getBlockInfo(this.currentBlock.nextblockhash).subscribe(data => {
-          this.nextBlock = data
-          this.nextBlock.date = new Date(this.currentBlock.time * 1000)
-        })
+      this.dataService.getBlockInfo(this.currentBlock.nextblockhash).subscribe(data => {
+        this.nextBlock = data
+        this.nextBlock.date = new Date(this.currentBlock.time * 1000)
+      })
 
-      
+
       console.log(data)
 
     })
@@ -391,13 +399,12 @@ export class AppComponent {
   }
 
 
-  backButtonClicked(){
+  backButtonClicked() {
 
 
     this.disableForwardButton = false;
 
-    if(this.curFiveBlocks[this.curFiveBlocks.length - 1].height < 6)
-    {
+    if (this.curFiveBlocks[this.curFiveBlocks.length - 1].height < 6) {
       this.disableBackwardButton = true
     }
 
@@ -444,21 +451,21 @@ export class AppComponent {
       });
 
 
-      this.isBlockTableActive = true;
+    this.isBlockTableActive = true;
 
 
-      ///include logic here to enable or disable the backward button
+    ///include logic here to enable or disable the backward button
 
   }
 
 
 
-  async forwardButtonClicked(){
+  async forwardButtonClicked() {
 
     this.disableBackwardButton = false;
 
     var tmpHash = this.curFiveBlocks[0].nextblockhash
-    
+
 
     ///Five blocks must be visible at all times
     ///include logic here to enable or disable forward button
@@ -471,66 +478,64 @@ export class AppComponent {
 
 
 
-    await (this.dataService.getBlockInfo(tmpHash).subscribe( async data=>{
+    await (this.dataService.getBlockInfo(tmpHash).subscribe(async data => {
 
-    await (this.tmpBlock = data)
-    await (curHeight = this.tmpBlock.height)
- 
-    if(maxHeight - curHeight < 7)
-    {
-      //disable the forward button
-      this.disableForwardButton = true;
+      await (this.tmpBlock = data)
+      await (curHeight = this.tmpBlock.height)
 
-      //set the latest five blocks
-      this.setCurFiveBlocks()
-    }
-    else
-    {
-      this.curFiveBlocks = [];
+      if (maxHeight - curHeight < 7) {
+        //disable the forward button
+        this.disableForwardButton = true;
 
-      this.http.get(this.configURL + 'block/' + tmpHash + '.json').subscribe(
-        async data => {
-          (this.tmpBlock = <blockInfo>data);
-          this.tmpBlock.date = new Date(this.tmpBlock.time * 1000)
-          this.curFiveBlocks.push(<blockInfo>data);
-  
-          await (this.http.get(this.configURL + 'block/' + this.tmpBlock.nextblockhash + '.json').subscribe(
-            async data => {
-              (this.tmpBlock = <blockInfo>data);
-              this.tmpBlock.date = new Date(this.tmpBlock.time * 1000)
-              this.curFiveBlocks.unshift(<blockInfo>data);
-  
-  
-              await (this.http.get(this.configURL + 'block/' + this.tmpBlock.nextblockhash + '.json').subscribe(
-                async data => {
-                  (this.tmpBlock = <blockInfo>data);
-                  this.tmpBlock.date = new Date(this.tmpBlock.time * 1000)
-                  this.curFiveBlocks.unshift(<blockInfo>data)
-  
-                  await (this.http.get(this.configURL + 'block/' + this.tmpBlock.nextblockhash + '.json').subscribe(
-                    async data => {
-                      (this.tmpBlock = <blockInfo>data);
-                      this.tmpBlock.date = new Date(this.tmpBlock.time * 1000)
-                      this.curFiveBlocks.unshift(<blockInfo>data)
-  
-  
-                      await (this.http.get(this.configURL + 'block/' + this.tmpBlock.nextblockhash + '.json').subscribe(
-                        async data => {
-                          (this.tmpBlock = <blockInfo>data);
-                          this.tmpBlock.date = new Date(this.tmpBlock.time * 1000)
-                          this.curFiveBlocks.unshift(<blockInfo>data)
-  
-                        }));
-                    }));
-                }));
-            }));
-        });
+        //set the latest five blocks
+        this.setCurFiveBlocks()
+      }
+      else {
+        this.curFiveBlocks = [];
 
-    }
+        this.http.get(this.configURL + 'block/' + tmpHash + '.json').subscribe(
+          async data => {
+            (this.tmpBlock = <blockInfo>data);
+            this.tmpBlock.date = new Date(this.tmpBlock.time * 1000)
+            this.curFiveBlocks.push(<blockInfo>data);
+
+            await (this.http.get(this.configURL + 'block/' + this.tmpBlock.nextblockhash + '.json').subscribe(
+              async data => {
+                (this.tmpBlock = <blockInfo>data);
+                this.tmpBlock.date = new Date(this.tmpBlock.time * 1000)
+                this.curFiveBlocks.unshift(<blockInfo>data);
+
+
+                await (this.http.get(this.configURL + 'block/' + this.tmpBlock.nextblockhash + '.json').subscribe(
+                  async data => {
+                    (this.tmpBlock = <blockInfo>data);
+                    this.tmpBlock.date = new Date(this.tmpBlock.time * 1000)
+                    this.curFiveBlocks.unshift(<blockInfo>data)
+
+                    await (this.http.get(this.configURL + 'block/' + this.tmpBlock.nextblockhash + '.json').subscribe(
+                      async data => {
+                        (this.tmpBlock = <blockInfo>data);
+                        this.tmpBlock.date = new Date(this.tmpBlock.time * 1000)
+                        this.curFiveBlocks.unshift(<blockInfo>data)
+
+
+                        await (this.http.get(this.configURL + 'block/' + this.tmpBlock.nextblockhash + '.json').subscribe(
+                          async data => {
+                            (this.tmpBlock = <blockInfo>data);
+                            this.tmpBlock.date = new Date(this.tmpBlock.time * 1000)
+                            this.curFiveBlocks.unshift(<blockInfo>data)
+
+                          }));
+                      }));
+                  }));
+              }));
+          });
+
+      }
     }))
 
     this.isBlockTableActive = true;
-  
+
   }
 
 
