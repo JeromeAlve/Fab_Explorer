@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../services/data.service';
-import { blockInfo } from '../../models/blockinfo';
+import {Component} from '@angular/core';
+import {DataService} from '../../services/data.service';
+import {BlockInfo} from '../../models/blockinfo';
 
 
 @Component({
@@ -8,19 +8,15 @@ import { blockInfo } from '../../models/blockinfo';
   templateUrl: './block-info.component.html',
   styleUrls: ['./block-info.component.css']
 })
-export class BlockInfoComponent implements OnInit {
+export class BlockInfoComponent {
 
-  myBlockInfo : blockInfo ;
-  curFiveBlocks : blockInfo[] = [];
+  myBlockInfo: BlockInfo;
+  curFiveBlocks: BlockInfo[] = [];
 
-  constructor(private dataService : DataService) { }
-
-  ngOnInit() {
-
-
+  constructor(private dataService: DataService) {
   }
 
-  setCurrentBlock(bId : string) {
+  setCurrentBlock(bId: string) {
 
     this.dataService.getBlockInfo(bId).subscribe(myBlockInfo => {
       this.myBlockInfo = myBlockInfo;

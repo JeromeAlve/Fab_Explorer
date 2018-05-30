@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../services/data.service'
-import { chainInfo } from '../../models/chainInfo';
+import {Component, OnInit} from '@angular/core';
+import {DataService} from '../../services/data.service';
+import {ChainInfo} from '../../models/chainInfo';
 
 
 @Component({
@@ -9,19 +9,15 @@ import { chainInfo } from '../../models/chainInfo';
   styleUrls: ['./chain-info.component.css']
 })
 export class ChainInfoComponent implements OnInit {
+  myChainInfo: ChainInfo;
 
-
-  myChainInfo : chainInfo;
-
-  constructor(private dataService : DataService) { }
-
+  constructor(private dataService: DataService) {
+  }
 
   ngOnInit() {
-
-   this.dataService.getChainInfo().subscribe(myChainInfo => {
-     this.myChainInfo = myChainInfo;
-   });
-   
+    this.dataService.getChainInfo().subscribe(myChainInfo => {
+      this.myChainInfo = myChainInfo;
+    });
   }
 
 }
