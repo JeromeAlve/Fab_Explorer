@@ -38,6 +38,7 @@ export interface TxVin {
   coinbase: string | null;
   sequence: number;
   vout: number | null;
+  txid: string | null;
   scriptSig: ScriptSignature | null;
 }
 

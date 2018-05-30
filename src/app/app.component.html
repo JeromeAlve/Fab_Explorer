@@ -264,7 +264,8 @@
             <ul class="list-group">
               <li class="list-group-item" *ngIf="!!vin.coinbase">Coinbase : {{vin.coinbase}}</li>
               <li class="list-group-item">Sequence : {{vin.sequence}}</li>
-              <li class="list-group-item" *ngIf="!!vin.vout">V_Out : {{vin.vout}}</li>
+              <li class="list-group-item" *ngIf="vin.vout !== undefined">V_Out : {{vin.vout}}</li>
+              <li class="list-group-item" *ngIf="!!vin.txid">Transaction ID : {{vin.txid}}</li>
               <li class="list-group-item" *ngIf="!!vin.scriptSig">
                 <h5>Script Signature</h5>
                 <ul class="list-group">
