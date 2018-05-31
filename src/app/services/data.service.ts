@@ -10,8 +10,8 @@ import 'rxjs/add/operator/mergeMap';
 @Injectable()
 export class DataService {
 
-  // configURL : string = 'http://35.182.160.212:18667/rest/' ; // Testnet
-  configURL = 'http://18.130.8.117:8667/rest/'; // mainnet
+  configURL : string = 'http://35.182.160.212:18667/rest/' ; // Testnet
+  // configURL = 'http://18.130.8.117:8667/rest/'; // mainnet
   curFiveBlocks: BlockInfo[] = [];
 
   constructor(private http: HttpClient) {

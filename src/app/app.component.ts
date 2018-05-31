@@ -40,8 +40,8 @@ export class AppComponent implements OnInit {
   // At any given time, five blocks will be displayed
   curFiveBlocks: BlockInfo[] = []; // For Dispaly Purposes
 
-  // configURL: string = 'http://35.182.160.212:18667/rest/'; //TestNet
-  configURL = 'http://18.130.8.117:8667/rest/'; // mainnet
+  configURL: string = 'http://35.182.160.212:18667/rest/'; //TestNet
+  // configURL = 'http://18.130.8.117:8667/rest/'; // mainnet
 
 
   // date = new Date(unix_timestamp*1000);
