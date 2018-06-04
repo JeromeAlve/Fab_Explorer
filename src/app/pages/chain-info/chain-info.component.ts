@@ -17,8 +17,11 @@ export class ChainInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    const latestChain = this.state.currentChain.getValue();
+    if (!!latestChain) {
+      this.chainInfo = latestChain;
+    }
     this.state.getChainInfo().subscribe(data => {
-      console.log(data);
       this.chainInfo = data;
     });
   }
