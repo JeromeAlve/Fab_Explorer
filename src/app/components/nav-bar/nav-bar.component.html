@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      <img src="../../../assets/img/fab-logo-o.png" class="img-fluid logo">
+      <span class="brand-name">
+        <i>
+          <b>Fabcoin.co</b>
+        </i>
+      </span>
+    </a>
+    <button class="navbar-toggler" (click)="toggleNavbar()" type="button" aria-controls="theNavbar"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div [ngbCollapse]="isNavbarCollapsed" id="theNavbar"
+         [@collapse]="isNavbarCollapsedAnim"
+         class="navbar-collapse collapse navbar-toggleable">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item text-center">
+          <a class="nav-link" routerLink="/latest-blocks" routerLinkActive="active">Latest Blocks</a>
+        </li>
+
+        <li class="nav-item text-center">
+          <a class="nav-link" routerLink="/chain" routerLinkActive="active">Chain Information</a>
+        </li>
+
+        <li class="nav-item text-center">
+          <a class="nav-link" routerLink="/search" routerLinkActive="active">Search</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

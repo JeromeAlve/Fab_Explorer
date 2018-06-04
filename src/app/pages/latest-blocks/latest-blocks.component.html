@@ -1,0 +1,60 @@
+<div class="container">
+
+  <!-- <h4 class="text-center" style="margin-top:10px;">Welcome to Fabcoin Explorer</h4> -->
+  <h3 class="text-center m-4">Latest Blocks</h3>
+  <div class="text-right col-lg-12 col-md-12">
+
+    <button type="button" [disabled]="disableBackwardButton" class="btn btn-primary btn-lg m-2"
+            (click)="backButtonClicked()">
+      <i class="fa fa-backward"></i>
+    </button>
+    <button type="button" [disabled]="disableForwardButton" class="btn btn-primary btn-lg m-2"
+            (click)="forwardButtonClicked()">
+      <i class="fa fa-forward"></i>
+    </button>
+
+  </div>
+  <div class="table-responsive col-lg-12 col-md-12 ">
+
+    <table class="table">
+      <thead>
+      <tr class="text-center">
+        <th scope="col">Height</th>
+        <th class="text-nowrap" scope="col">Mined On</th>
+        <th scope="col">Transactions</th>
+        <th scope="col">Size</th>
+        <th scope="col">Confirmations</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="text-center" *ngFor="let block of curFiveBlocks">
+        <th scope="row">
+          <a href="#" (click)="blockClicked(block.height)">{{block.height}} </a>
+        </th>
+        <td>
+          <span class="text-nowrap"> {{ block.date | date:'MMM dd, yyyy '}} </span>
+          <br>
+          <span>{{block.date | date:' hh:mm a' }}</span>
+        </td>
+        <td>{{block.tx.length}}</td>
+        <td>{{block.size}}</td>
+        <td>{{block.confirmations}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+
+    <!-- <ul class="pagination pagination-lg">
+      <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1">1</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+    </ul> -->
+
+
+  </div>
+  <!--
+<p > <span><span *ngFor="let block of curFiveBlocks" >{{block.height}}<br></span></span> </p>
+-->
+</div>

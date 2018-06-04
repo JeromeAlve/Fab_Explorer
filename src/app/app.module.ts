@@ -1,27 +1,29 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {AppComponent} from './app.component';
-import {DataService} from './services/data.service';
-import {ChainInfoComponent} from './components/chain-info/chain-info.component';
-import {BlockInfoComponent} from './components/block-info/block-info.component';
-import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import {APP_BASE_HREF} from '@angular/common';
+import {AppRoutingModule} from './app-routing.module';
+import {ComponentsModule} from './components/components.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CoreModule} from './core/core.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ChainInfoComponent,
-    BlockInfoComponent
+    AppComponent
   ],
   imports: [
-    HttpClientModule,
+    AppRoutingModule,
     BrowserModule,
-    AngularFontAwesomeModule
-
+    ComponentsModule,
+    CoreModule,
+    BrowserAnimationsModule,
+    NgbModule.forRoot()
   ],
-  providers: [DataService],
+  providers: [
+    {provide: APP_BASE_HREF, useValue: '/'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
