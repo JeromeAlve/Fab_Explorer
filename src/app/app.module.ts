@@ -8,6 +8,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {ComponentsModule} from './components/components.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from './core/core.module';
+import {ApiService, StateService} from './core/services';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import {CoreModule} from './core/core.module';
     NgbModule.forRoot()
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: '/'}
+    {provide: APP_BASE_HREF, useValue: '/'},
+    ApiService,
+    StateService
   ],
   bootstrap: [AppComponent]
 })

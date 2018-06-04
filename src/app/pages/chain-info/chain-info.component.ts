@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from '../../core/services';
+import {ApiService, StateService} from '../../core/services';
 import {Chain} from '../../core/models';
 
 @Component({
@@ -12,13 +12,14 @@ export class ChainInfoComponent implements OnInit {
   chainInfo: Chain;
 
   constructor(
-    private api: ApiService
+    private state: StateService
   ) {
   }
 
   ngOnInit() {
-    this.api.getChainInfo().subscribe((result) => {
-      this.chainInfo = result;
+    this.state.getChainInfo().subscribe(data => {
+      console.log(data);
+      this.chainInfo = data;
     });
   }
 

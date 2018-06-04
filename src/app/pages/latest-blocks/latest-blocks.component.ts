@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ApiService} from '../../core/services';
 
 @Component({
   selector: 'app-latest-blocks',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LatestBlocksComponent implements OnInit {
 
-  constructor() { }
+  constructor(private api: ApiService) {
+  }
 
   ngOnInit() {
   }
