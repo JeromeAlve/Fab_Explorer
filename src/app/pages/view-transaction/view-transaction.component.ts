@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Block, Tx} from '../../core/models';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-view-transaction',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-transaction.component.css']
 })
 export class ViewTransactionComponent implements OnInit {
+  transaction: Tx;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.route.data.subscribe((data: {transaction: Tx}) => {
+      this.transaction = data.transaction;
+    });
   }
 
 }

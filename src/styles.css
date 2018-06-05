@@ -5,3 +5,11 @@
 html * {
   font-family: Titillium Web, sans-serif !important;
 }
+
+.left-truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  direction: rtl;
+}

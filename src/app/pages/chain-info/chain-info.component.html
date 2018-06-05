@@ -9,13 +9,13 @@
       <li class="list-group-item">Headers : {{chainInfo.headers}}</li>
       <li class="list-group-item text-truncate">
         Best Block Hash :
-        <a href="#" (click)="blockHashClicked(chainInfo.bestblockhash)"> {{chainInfo.bestblockhash}} </a>
+        <a [routerLink]="['/blocks', chainInfo.bestblockhash]"> {{chainInfo.bestblockhash}} </a>
       </li>
       <li class="list-group-item">Difficulty : {{chainInfo.difficulty}}</li>
       <li class="list-group-item">Median Time : {{chainInfo.mediantime}}</li>
       <li class="list-group-item">Verification Progress : {{chainInfo.verificationprogress}}</li>
       <li class="list-group-item">Chain Work :
-        <div class="chainwork"> {{chainInfo.chainwork}}
+        <div class="left-truncate"> {{chainInfo.chainwork}}
         </div>
       </li>
       <li class="list-group-item">Pruned : {{chainInfo.pruned}}</li>

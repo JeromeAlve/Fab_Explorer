@@ -9,7 +9,7 @@ const routes: Routes = [
     path: ':blockHash',
     component: ViewBlockComponent,
     resolve: {
-      article: ViewBlockResolverService
+      block: ViewBlockResolverService
     }
   }
 ];

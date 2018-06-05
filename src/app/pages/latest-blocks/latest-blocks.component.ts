@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService, StateService} from '../../core/services';
 import {Block} from '../../core/models';
-import {element} from 'protractor';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-latest-blocks',
@@ -16,15 +14,12 @@ export class LatestBlocksComponent implements OnInit {
 
   initialized = false;
   loading = true;
-  moreNext = false;
-  morePrev = true;
   displayedBlocks: Block[] = [];
   displayBlockNum = 5;
 
   constructor(
     private state: StateService,
-    private api: ApiService,
-    private router: Router
+    private api: ApiService
   ) {
   }
 
@@ -72,7 +67,6 @@ export class LatestBlocksComponent implements OnInit {
     }
 
     this.currentBlockIndex += this.displayBlockNum;
-    this.moreNext = true;
   }
 
   getNext() {
@@ -82,22 +76,16 @@ export class LatestBlocksComponent implements OnInit {
 
     this.currentBlockIndex -= this.displayBlockNum;
     this.displayedBlocks = this.currentBlocks.slice(this.currentBlockIndex - this.displayBlockNum, this.currentBlockIndex);
-    this.morePrev = true;
   }
 
-  checkBlockDetail(height: number) {
+  getBlockHash(height: number) {
     const found = this.currentBlocks.find(block => block.height === height);
     if (!found) {
       console.error(`No block found for height ${height}`);
       return;
     }
 
-    this.router.navigate(['/blocks', found.hash])
-      .then(
-        data => console.log(data)
-      ).catch(
-        reason => console.error(reason)
-    );
+    return found.hash;
   }
 
   private getBlocks(blockHash: string, numBlocks: number = 5) {

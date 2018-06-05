@@ -24,7 +24,7 @@
       <tbody>
       <tr class="text-center" *ngFor="let block of displayedBlocks">
         <th scope="row">
-          <a href="#" (click)="checkBlockDetail(block.height)">{{block.height}} </a>
+          <a [routerLink]="['/blocks', getBlockHash(block.height)]">{{block.height}} </a>
         </th>
         <td>
           <span class="text-nowrap"> {{ block.date | date:'MMM dd, yyyy '}} </span>

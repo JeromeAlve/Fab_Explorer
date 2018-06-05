@@ -9,7 +9,7 @@ const routes: Routes = [
     path: ':transactionHash',
     component: ViewTransactionComponent,
     resolve: {
-      article: ViewTransactionResolverService
+      transaction: ViewTransactionResolverService
     }
   }
 ];
