@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService, StateService} from '../../core/services';
 import {Block} from '../../core/models';
+import {element} from 'protractor';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-latest-blocks',
@@ -21,7 +23,8 @@ export class LatestBlocksComponent implements OnInit {
 
   constructor(
     private state: StateService,
-    private api: ApiService
+    private api: ApiService,
+    private router: Router
   ) {
   }
 
@@ -46,11 +49,18 @@ export class LatestBlocksComponent implements OnInit {
     this.initialized = true;
   }
 
+  isMoreNext(): boolean {
+    return this.currentBlockIndex > this.displayBlockNum;
+  }
+
+  isMorePrev(): boolean {
+    return this.currentBlocks[this.currentBlocks.length - 1].height > 0;
+  }
+
   getPrev() {
     const blockLen = this.currentBlocks.length;
 
-    if (this.currentBlocks[blockLen - 1].height === 0) {
-      this.morePrev = false;
+    if (!this.isMorePrev()) {
       return;
     }
 
@@ -66,19 +76,35 @@ export class LatestBlocksComponent implements OnInit {
   }
 
   getNext() {
-    if (this.currentBlockIndex - this.displayBlockNum <= 0) {
-      this.moreNext = false;
+    if (!this.isMoreNext()) {
       return;
     }
+
     this.currentBlockIndex -= this.displayBlockNum;
     this.displayedBlocks = this.currentBlocks.slice(this.currentBlockIndex - this.displayBlockNum, this.currentBlockIndex);
     this.morePrev = true;
+  }
+
+  checkBlockDetail(height: number) {
+    const found = this.currentBlocks.find(block => block.height === height);
+    if (!found) {
+      console.error(`No block found for height ${height}`);
+      return;
+    }
+
+    this.router.navigate(['/blocks', found.hash])
+      .then(
+        data => console.log(data)
+      ).catch(
+        reason => console.error(reason)
+    );
   }
 
   private getBlocks(blockHash: string, numBlocks: number = 5) {
     if (numBlocks > 0) {
       this.loading = true;
       this.api.getBlockInfo(blockHash).subscribe(block => {
+        block.date = new Date(block.time * 1000);
         this.displayedBlocks.push(block);
         this.currentBlocks.push(block);
 

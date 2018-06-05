@@ -1,11 +1,11 @@
 <div class="container" style="margin-top: 100px">
   <h3 class="text-center m-4">Latest Blocks</h3>
   <div class="text-right col-lg-12 col-md-12">
-    <button type="button" [disabled]="loading || !morePrev" class="btn btn-primary btn-lg m-2"
+    <button type="button" [disabled]="loading || !isMorePrev()" class="btn btn-primary btn-lg m-2"
             (click)="getPrev()">
       <i class="fa fa-backward"></i>
     </button>
-    <button type="button" [disabled]="loading || !moreNext" class="btn btn-primary btn-lg m-2"
+    <button type="button" [disabled]="loading || !isMoreNext()" class="btn btn-primary btn-lg m-2"
             (click)="getNext()">
       <i class="fa fa-forward"></i>
     </button>
@@ -24,7 +24,7 @@
       <tbody>
       <tr class="text-center" *ngFor="let block of displayedBlocks">
         <th scope="row">
-          <a href="#" (click)="blockClicked(block.height)">{{block.height}} </a>
+          <a href="#" (click)="checkBlockDetail(block.height)">{{block.height}} </a>
         </th>
         <td>
           <span class="text-nowrap"> {{ block.date | date:'MMM dd, yyyy '}} </span>
