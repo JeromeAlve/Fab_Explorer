@@ -1,4 +1,4 @@
-<div class="input-group mb-3">
+<div class="input-group mb-3" style="margin-top: 100px">
   <div ngbDropdown class="input-group-prepend">
     <button class="btn btn-outline-secondary dropdown-toggle" type="button" ngbDropdownToggle aria-haspopup="true" aria-expanded="false">Dropdown</button>
     <div class="dropdown-menu">
@@ -8,5 +8,20 @@
       <a class="dropdown-item" href="#">Address</a>
     </div>
   </div>
-  <input type="text" class="form-control" aria-label="Text input with dropdown button">
+  <label for="search-bar"></label>
+  <input type="text" class="form-control" aria-label="Text input with dropdown button" id="search-bar">
+</div>
+
+<div class="container text-truncate">
+  <h1 class="text-center">Search</h1>
+  <div class="form-group">
+    <input class="form-control" placeholder="Enter Block Hash">
+
+    <div class="text-right">
+      <button class="btn btn-primary m-4" (click)="searchBlockById(bId.value)">Submit</button>
+    </div>
+  </div>
+  <div>
+    <h2>The given Block Hash is invalid.</h2>
+  </div>
 </div>

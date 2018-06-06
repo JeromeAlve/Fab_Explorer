@@ -1,72 +1,65 @@
-<div class="container">
-  <h2 class="text-center m-4">Block # {{currentBlock.height}} </h2>
-  <h5 class="text-center m-4 text-truncate">Hash # {{currentBlock.hash}} </h5>
-  <div class="card">
-    <div class="row">
-      <div class="col-md-6">
-        <p class="text-truncate m-4">
-          <b> Height : </b>{{currentBlock.height}}
-          <br>
-          <b> Previous Block :</b>
-          <a href="#" *ngIf="previousBlock" (click)="previousBlockClicked()"> {{previousBlock.height}} </a>
-          <br>
-          <b> Difficulty :</b> {{currentBlock.difficulty}}
-          <br>
-          <b> Mined On :</b>{{currentBlock.date | date :'MMM dd, yyyy - hh:mm a'}}
-          <br>
-          <b>Size :</b> {{currentBlock.size}}
-          <br>
-          <b> Version :</b>{{currentBlock.version}}
-          <br>
-          <b>Merkle Root :</b> {{currentBlock.merkleroot}}
-          <br>
-        </p>
-      </div>
-      <div class="col-md-6">
-        <div class=" m-4">
-          <!-- <b> Height : </b>{{currentBlock.height}} <br> -->
-          <b> Next Block :</b>
-          <span *ngIf="nextBlock && currentBlock.height !== nextBlock.height">
-            <a href="#" (click)="nextBlockClicked()"> {{nextBlock.height}}</a>
+<div class="container" style="margin-top: 100px">
+  <div *ngIf="!!block">
+    <h2 class="text-center m-4">Block # {{block.height}} </h2>
+    <h5 class="text-center m-4 text-truncate">Hash # {{block.hash}} </h5>
+    <div class="card">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="text-truncate m-4">
+            <b> Height : </b> {{block.height}}
+            <br>
+            <b> Previous Block :</b>
+            <a [routerLink]="['/blocks', block.previousblockhash]"> {{block.height - 1}} </a>
+            <br>
+            <b> Difficulty :</b> {{block.difficulty}}
+            <br>
+            <b> Mined On :</b> {{block.date | date :'MMM dd, yyyy - hh:mm a'}}
+            <br>
+            <b>Size :</b> {{block.size}}
+            <br>
+            <b> Version :</b> {{block.version}}
+            <br>
+            <b>Merkle Root :</b> {{block.merkleroot}}
+            <br>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <div class=" m-4">
+            <b> Next Block :</b>
+            <span *ngIf="block.nextblockhash">
+            <a [routerLink]="['/blocks', block.nextblockhash]"> {{block.height + 1}}</a>
           </span>
-          <span *ngIf="!nextBlock || currentBlock.height === nextBlock.height">No New Block</span>
-          <br>
-          <b> Transactions :</b>{{currentBlock.tx.length}}
-          <br>
-          <b> Bits :</b>{{currentBlock.bits}}
-          <br>
-          <b>Size :</b> {{currentBlock.size}}
-          <br>
-          <b> Nonce :</b>
-          <div style="
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              text-align: right;
-              text-align: left;direction: rtl;"> {{currentBlock.nonce}}
+            <span *ngIf="!block.nextblockhash">No New Block</span>
+            <br>
+            <b> Transactions :</b> {{block.tx.length}}
+            <br>
+            <b> Bits :</b> {{block.bits}}
+            <br>
+            <b>Size :</b> {{block.size}}
+            <br>
+            <b> Nonce :</b>
+            <div class="left-truncate"> {{block.nonce}}
+            </div>
+            <b>Solution :</b>
+            <!-- add solution here -->
+            <br>
           </div>
-          <b>Solution :</b>
-          <!-- add solution here -->
-          <br>
+        </div>
+        <div class="col-md-12 text-truncate">
+          <li class="list-group-item">
+            <h3 class="text-center">Transactions</h3>
+            <ul class="list-group">
+              <li class="list-group-item text-truncate text-center" *ngFor="let t of block.tx; let i = index"
+                  [attr.data-index]="i">
+                {{i}}. &nbsp; &nbsp;&nbsp;&nbsp; <a href="#" [routerLink]="['/transactions', t.txid]"> {{t.txid}}</a>
+              </li>
+            </ul>
+          </li>
         </div>
       </div>
-      <div class="col-md-12 text-truncate">
-        <li class="list-group-item">
-          <h3 class="text-center">Transactions</h3>
-          <ul class="list-group">
-            <li class="list-group-item text-truncate text-center" *ngFor="let t of currentBlock.tx; let i = index"
-                [attr.data-index]="i">
-              {{i}}. &nbsp; &nbsp;&nbsp;&nbsp; <a href="#" (click)="TxFromBlockClicked(t.txid)"> {{t.txid }}</a>
-              <!--  <ul class="list-group">
-                  <li class="list-group-item text-truncate"> Transaction Id : {{i}}
-                    <a href="#" (click)="TxFromBlockClicked(t.txid)" > {{t.txid  }}</a>
-                  </li>
-                  <li class="list-group-item text-truncate">Hash : {{t.hash }}</li>
-                </ul> -->
-            </li>
-          </ul>
-        </li>
-      </div>
     </div>
+  </div>
+  <div *ngIf="!block" class="text-center">
+    <h2>The given Block ID is invalid.</h2>
   </div>
 </div>

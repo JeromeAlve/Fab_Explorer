@@ -15,7 +15,7 @@ export interface UTXO {
   txid: string;
   voutindex: number;
   value: number;
-  createDate: string;
+  createdate: string;
 }
 
 export interface TxVin {

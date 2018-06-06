@@ -7,25 +7,30 @@ import {Observable} from 'rxjs';
 @Injectable()
 export class ApiService {
 
-  apiBase: string = environment.apiBase;
+  restAPIBase: string = environment.restAPIBase;
+  fabAPIBase: string = environment.fabAPIBase;
 
   constructor(private http: HttpClient) {
   }
 
+  getBlockHash(height: number): Observable<string> {
+    return this.http.get<string>(`${this.fabAPIBase}/getblockhash/${height}`);
+  }
+
   getAddressUTXOs(address: string): Observable<UTXO[]> {
-    return this.http.get<UTXO[]>(`${this.apiBase}/unspenttransactionpolicy/${address}`);
+    return this.http.get<UTXO[]>(`${this.fabAPIBase}/unspenttransactionpolicy/${address}`);
   }
 
   getChainInfo(): Observable<Chain> {
-    return this.http.get<Chain>(`${this.apiBase}/chaininfo.json`);
+    return this.http.get<Chain>(`${this.restAPIBase}/chaininfo.json`);
   }
 
   getBlockInfo(bId: string): Observable<Block> {
-    return this.http.get<Block>(`${this.apiBase}/block/${bId}.json`);
+    return this.http.get<Block>(`${this.restAPIBase}/block/${bId}.json`);
   }
 
   getTxInfo(tId: string): Observable<Tx> {
-    return this.http.get<Tx>(`${this.apiBase}/tx/${tId}.json`);
+    return this.http.get<Tx>(`${this.restAPIBase}/tx/${tId}.json`);
   }
 
 }

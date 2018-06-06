@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ApiService, StateService} from './services';
 import {HttpClientModule} from '@angular/common/http';
+import {UtilsService} from './services/utils.service';
 
 @NgModule({
   imports: [
@@ -10,7 +11,8 @@ import {HttpClientModule} from '@angular/common/http';
   ],
   providers: [
     ApiService,
-    StateService
+    StateService,
+    UtilsService
   ],
   declarations: []
 })

@@ -6,24 +6,36 @@ import {BlockInfoComponent} from './block-info/block-info.component';
 import {TransactionInfoComponent} from './transaction-info/transaction-info.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RouterModule} from '@angular/router';
+import { AddressInfoComponent } from './address-info/address-info.component';
+import { AddressTransactionDetailComponent } from './address-transaction-detail/address-transaction-detail.component';
+import {PaginationModule} from 'ngx-bootstrap';
+import { ConvertDatePipe } from './address-transaction-detail/convert-date.pipe';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 @NgModule({
   imports: [
     CommonModule,
     NgbModule,
-    RouterModule
+    RouterModule,
+    PaginationModule,
+    NgxSpinnerModule
   ],
   declarations: [
     NavBarComponent,
     SearchBarComponent,
     BlockInfoComponent,
-    TransactionInfoComponent
+    TransactionInfoComponent,
+    AddressInfoComponent,
+    AddressTransactionDetailComponent,
+    ConvertDatePipe
   ],
   exports: [
     NavBarComponent,
     SearchBarComponent,
     BlockInfoComponent,
-    TransactionInfoComponent
+    TransactionInfoComponent,
+    AddressInfoComponent,
+    AddressTransactionDetailComponent
   ]
 })
 export class ComponentsModule {

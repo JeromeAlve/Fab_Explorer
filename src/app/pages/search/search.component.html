@@ -1,3 +1,10 @@
-<p style="margin-top: 200px">
-  search works!
-</p>
+<app-search-bar></app-search-bar>
+<app-block-info *ngIf="(searchType === 'blockHash' || searchType === 'blockHeight') && !searching"></app-block-info>
+<app-transaction-info *ngIf="searchType === 'transaction' && !searching"></app-transaction-info>
+<app-address-info *ngIf="searchType === 'address' && !searching"></app-address-info>
+<ngx-spinner *ngIf="searching"
+  bdColor="rgba(51, 51, 51, 0.8)"
+  size="large"
+  color="#fff"
+  type="ball-fall"
+></ngx-spinner>

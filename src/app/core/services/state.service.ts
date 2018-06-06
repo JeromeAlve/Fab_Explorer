@@ -3,7 +3,6 @@ import {ApiService} from './api.service';
 import {timer} from 'rxjs';
 import {Observable} from 'rxjs/internal/Observable';
 import {Chain} from '../models';
-import {Subject} from 'rxjs/internal/Subject';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 
