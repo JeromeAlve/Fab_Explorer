@@ -48,7 +48,9 @@
               <li class="list-group-item" *ngIf="!!vt.scriptPubKey.type">ScriptPubKeyType : {{vt.scriptPubKey.type}}</li>
               <li class="list-group-item" *ngIf="!!vt.scriptPubKey.addresses && !!vt.scriptPubKey.addresses.length">
                 <h5>Addresses</h5>
-                <div *ngFor="let addr of vt.scriptPubKey.addresses" class="text-truncate">{{addr}}</div>
+                <div *ngFor="let addr of vt.scriptPubKey.addresses" class="text-truncate">
+                  <a [routerLink]="['/address-info', addr]">{{addr}}</a>
+                </div>
               </li>
             </ul>
 
