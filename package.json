@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-test-net": "ng build --configuration=test --output-path=./dist/test-net",
+    "build-main-net": "ng build --configuration=main --output-path=./dist/main-net",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
