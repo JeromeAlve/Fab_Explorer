@@ -13,6 +13,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `npm run-script build-main-net` to build the project for `FAB Main Net`. The build artifacts will be stored in the `dist/main-net/` directory.
+
 Run `npm run-script build-test-net` to build the project for `FAB Test Net`. The build artifacts will be stored in the `dist/test-net/` directory.
 
 ## Running unit tests
