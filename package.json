@@ -5,8 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-test-net": "ng build --configuration=test --output-path=./dist/test-net",
-    "build-main-net": "ng build --configuration=main --output-path=./dist/main-net",
+    "build-test-net": "ng build --configuration=test --output-path=./dist/test-net --build-optimizer",
+    "build-main-net": "ng build --configuration=main --output-path=./dist/main-net --build-optimizer",
+    "build-smart-contract": "ng build --configuration=smartContract --output-path=./dist/smart-contract --build-optimizer",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
