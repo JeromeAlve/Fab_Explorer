@@ -88,7 +88,7 @@ export class LatestBlocksComponent implements OnInit {
     return found.hash;
   }
 
-  private getBlocks(blockHash: string, numBlocks: number = 5) {
+  private async getBlocks(blockHash: string, numBlocks: number = 5) {
     if (numBlocks > 0) {
       this.loading = true;
       this.api.getBlockInfo(blockHash).subscribe(block => {
@@ -97,7 +97,12 @@ export class LatestBlocksComponent implements OnInit {
         this.currentBlocks.push(block);
 
         if (!!block.previousblockhash) {
-          this.getBlocks(block.previousblockhash, numBlocks - 1);
+          this.getBlocks(block.previousblockhash, numBlocks - 1)
+            .then(_ => console.log(`Loaded block ${block.previousblockhash}`))
+            .catch(err => {
+              console.error(err);
+              this.loading = false;
+            });
         }
       });
     } else {

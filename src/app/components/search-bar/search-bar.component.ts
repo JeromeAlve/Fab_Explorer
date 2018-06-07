@@ -13,8 +13,9 @@ import {AddressInfo} from '../../core/models/address.model';
   styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent implements OnInit {
-  @Output() searchResult = new EventEmitter<{data: Block | Tx | AddressInfo, type: string}>();
+  @Output() searchResult = new EventEmitter<{ data: Block | Tx | AddressInfo, type: string }>();
   searchFailed = false;
+  displaySearchValue: string;
 
   searchType: SearchOption;
   searchValue = '';
@@ -45,9 +46,10 @@ export class SearchBarComponent implements OnInit {
   private caughtError = (err) => {
     console.error(err);
     this.searchFailed = true;
+    this.displaySearchValue = this.searchValue;
     this.searchResult.emit(null);
     this.spinner.hide();
-  }
+  };
 
   setSearchType(option: SearchOption) {
     this.searchType = option;
@@ -55,7 +57,11 @@ export class SearchBarComponent implements OnInit {
   }
 
   onKey(event: any) {
-    this.searchValue = event.target.value;
+    if (event.keyCode === 13) {
+      this.search();
+    } else {
+      this.searchValue = event.target.value;
+    }
   }
 
   search() {

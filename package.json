@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-all": "npm run-script build-test-net && npm run-script build-main-net && npm run-script build-smart-contract",
     "build-test-net": "ng build --configuration=test --output-path=./dist/test-net --build-optimizer",
     "build-main-net": "ng build --configuration=main --output-path=./dist/main-net --build-optimizer",
     "build-smart-contract": "ng build --configuration=smartContract --output-path=./dist/smart-contract --build-optimizer",

@@ -14,7 +14,7 @@ export class StateService {
   constructor(private api: ApiService) {
     this.currentChain = new BehaviorSubject<Chain>(null);
     this.topBlockHash = new BehaviorSubject<string>(null);
-    timer(0, 5000).subscribe(
+    timer(0, 10000).subscribe(
       _ => {
         api.getChainInfo().subscribe(
           data => {
