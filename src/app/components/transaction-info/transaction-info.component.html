@@ -1,0 +1,66 @@
+<div class="container" style="margin-top: 100px">
+  <h1 class="text-center">Transaction Information</h1>
+
+  <!-- when the transaction is loaded-->
+  <div *ngIf="!!transaction" class="text-truncate">
+    <h2 class="primary ">Transaction Info</h2>
+
+    <ul class="list-group text-truncate">
+      <li class="list-group-item text-truncate">Transaction Id : {{transaction.txid}}</li>
+      <li class="list-group-item text-truncate">Block Hash :
+        <a [routerLink]="['/blocks', transaction.blockhash]"> {{transaction.blockhash}} </a>
+      </li>
+      <li class="list-group-item text-truncate">Hash : {{transaction.hash}}</li>
+      <li class="list-group-item">Version : {{transaction.version}}</li>
+      <li class="list-group-item">Size : {{transaction.size}}</li>
+      <li class="list-group-item">VSize : {{transaction.vsize}}</li>
+      <li class="list-group-item">Lock time : {{transaction.locktime}}</li>
+      <li class="list-group-item" *ngIf="transaction.vin">
+        <h3>V_In</h3>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let vin of transaction.vin">
+            <ul class="list-group">
+              <li class="list-group-item" *ngIf="!!vin.coinbase">Coinbase : {{vin.coinbase}}</li>
+              <li class="list-group-item">Sequence : {{vin.sequence}}</li>
+              <li class="list-group-item" *ngIf="vin.vout !== undefined">V_Out : {{vin.vout}}</li>
+              <li class="list-group-item" *ngIf="!!vin.txid">Transaction ID : {{vin.txid}}</li>
+              <li class="list-group-item" *ngIf="!!vin.scriptSig">
+                <h5>Script Signature</h5>
+                <ul class="list-group">
+                  <li class="list-group-item text-truncate">ASM : {{vin.scriptSig.asm}}</li>
+                  <li class="list-group-item text-truncate">Hex : {{vin.scriptSig.hex}}</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="list-group-item" *ngIf="transaction.vout">
+        <h3>V_Out</h3>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let vt of transaction.vout">
+            <ul class="list-group">
+              <li class="list-group-item"> Value : {{vt.value}}</li>
+              <li class="list-group-item"> n : {{vt.n}}</li>
+              <li class="list-group-item text-truncate"> ScriptPubKey-ASM : {{vt.scriptPubKey.asm }}</li>
+              <li class="list-group-item text-truncate">ScriptPubKey-Hex : {{vt.scriptPubKey.hex}}</li>
+              <li class="list-group-item" *ngIf="!!vt.scriptPubKey.reqSigs"> ScriptPubKeyReqSigs : {{vt.scriptPubKey.reqSigs}}</li>
+              <li class="list-group-item" *ngIf="!!vt.scriptPubKey.type">ScriptPubKeyType : {{vt.scriptPubKey.type}}</li>
+              <li class="list-group-item" *ngIf="!!vt.scriptPubKey.addresses && !!vt.scriptPubKey.addresses.length">
+                <h5>Addresses</h5>
+                <div *ngFor="let addr of vt.scriptPubKey.addresses" class="text-truncate">
+                  <a [routerLink]="['/address-info', addr]">{{addr}}</a>
+                </div>
+              </li>
+            </ul>
+
+          </li>
+        </ul>
+      </li>
+      <li class="list-group-item text-truncate">Hex : {{transaction.hex }}</li>
+    </ul>
+  </div>
+  <div *ngIf="!transaction" class="text-center">
+    <h2>The given Transaction Id is invalid.</h2>
+  </div>
+</div>

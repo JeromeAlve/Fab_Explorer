@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web');
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+html * {
+  font-family: Titillium Web, sans-serif;
+}
+
+.left-truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  direction: rtl;
+}

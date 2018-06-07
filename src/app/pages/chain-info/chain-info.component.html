@@ -1,0 +1,26 @@
+<div class="container text-truncate" style="margin-top: 100px">
+
+  <div class="col-lg-12 text-truncate" *ngIf="!!chainInfo">
+    <h1 class="primary text-center">Chain Information</h1>
+
+    <ul class="list-group">
+      <li class="list-group-item">Chain : {{chainInfo.chain}}</li>
+      <li class="list-group-item">Blocks : {{chainInfo.blocks}}</li>
+      <li class="list-group-item">Headers : {{chainInfo.headers}}</li>
+      <li class="list-group-item text-truncate">
+        Best Block Hash :
+        <a [routerLink]="['/blocks', chainInfo.bestblockhash]"> {{chainInfo.bestblockhash}} </a>
+      </li>
+      <li class="list-group-item">Difficulty : {{chainInfo.difficulty}}</li>
+      <li class="list-group-item">Median Time : {{chainInfo.mediantime}}</li>
+      <li class="list-group-item">Verification Progress : {{chainInfo.verificationprogress}}</li>
+      <li class="list-group-item">Chain Work :
+        <div class="left-truncate"> {{chainInfo.chainwork}}
+        </div>
+      </li>
+      <li class="list-group-item">Pruned : {{chainInfo.pruned}}</li>
+
+    </ul>
+  </div>
+  <div *ngIf="!chainInfo">Loading...</div>
+</div>

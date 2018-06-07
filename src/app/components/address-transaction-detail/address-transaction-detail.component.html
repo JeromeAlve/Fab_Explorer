@@ -1,0 +1,32 @@
+<h5>Transactions</h5>
+<div class="table-responsive col-lg-12 col-md-12 ">
+  <table class="table">
+    <thead>
+    <tr class="text-center">
+      <th scope="col">Transaction ID</th>
+      <th class="col" scope="col">Transaction Time</th>
+      <th scope="col">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="text-center" *ngFor="let transaction of displayedTransactions">
+      <th scope="row">
+        <a [routerLink]="['/transactions', transaction.txid]">{{transaction.txid}} </a>
+      </th>
+      <td>
+        <span class="text-nowrap"> {{ transaction.createdate | convertDate | date:'MMM dd, yyyy '}} </span>
+        <br>
+        <span>{{transaction.createdate | convertDate | date:' hh:mm a' }}</span>
+      </td>
+      <td>{{transaction.value >= 0 ? '+' : ''}}{{transaction.value}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <pagination class="justify-content-center"
+    [totalItems]="transactions.length"
+    [rotate]="rotate"
+    [maxSize]="maxPagesDisplayed"
+    (pageChanged)="pageChanged($event)"
+  >
+  </pagination>
+</div>

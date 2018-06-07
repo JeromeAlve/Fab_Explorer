@@ -1,0 +1,19 @@
+<div class="container" style="margin-top: 100px">
+  <h3 class="text-center">Address Information</h3>
+
+  <!-- when the transaction is loaded-->
+  <div *ngIf="!!address.transactions" class="text-truncate">
+    <h5 class="primary text-center">Address: {{address.address}}</h5>
+
+    <ul class="list-group text-truncate">
+      <li class="list-group-item">
+        <h5>Coin Amount : {{address.coinAmount}}</h5>
+      </li>
+      <li class="list-group-item">
+        <app-address-transaction-detail [transactions]="address.transactions"></app-address-transaction-detail>
+    </ul>
+  </div>
+  <div *ngIf="!address.transactions" class="text-center">
+    <h4>Loading...</h4>
+  </div>
+</div>

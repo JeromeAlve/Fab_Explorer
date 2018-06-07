@@ -1,0 +1,41 @@
+<div class="container" style="margin-top: 100px">
+  <h3 class="text-center m-4">Latest Blocks</h3>
+  <div class="text-right col-lg-12 col-md-12">
+    <button type="button" [disabled]="loading || !isMorePrev()" class="btn btn-primary btn-lg m-2"
+            (click)="getPrev()">
+      <i class="fa fa-backward"></i>
+    </button>
+    <button type="button" [disabled]="loading || !isMoreNext()" class="btn btn-primary btn-lg m-2"
+            (click)="getNext()">
+      <i class="fa fa-forward"></i>
+    </button>
+  </div>
+  <div class="table-responsive col-lg-12 col-md-12 ">
+    <table class="table">
+      <thead>
+      <tr class="text-center">
+        <th scope="col">Height</th>
+        <th class="text-nowrap" scope="col">Mined On</th>
+        <th scope="col">Transactions</th>
+        <th scope="col">Size</th>
+        <th scope="col">Confirmations</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="text-center" *ngFor="let block of displayedBlocks">
+        <th scope="row">
+          <a [routerLink]="['/blocks', getBlockHash(block.height)]">{{block.height}} </a>
+        </th>
+        <td>
+          <span class="text-nowrap"> {{ block.date | date:'MMM dd, yyyy '}} </span>
+          <br>
+          <span>{{block.date | date:' hh:mm a' }}</span>
+        </td>
+        <td>{{block.tx.length}}</td>
+        <td>{{block.size}}</td>
+        <td>{{block.confirmations}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
