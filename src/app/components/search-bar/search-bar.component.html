@@ -1,27 +1,36 @@
-<div class="input-group mb-3" style="margin-top: 100px">
-  <div ngbDropdown class="input-group-prepend">
-    <button class="btn btn-outline-secondary dropdown-toggle" type="button" ngbDropdownToggle aria-haspopup="true" aria-expanded="false">Dropdown</button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">Block</a>
-      <a class="dropdown-item" href="#">Transaction</a>
-      <a class="dropdown-item" href="#">Height</a>
-      <a class="dropdown-item" href="#">Address</a>
+<div class="container" style="margin-top: 100px">
+  <h2 class="text-center">Search</h2>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <div class="btn-group" dropdown>
+        <button
+          id="search-button"
+          class="btn btn-outline-primary dropdown-toggle" type="button" dropdownToggle aria-haspopup="true"
+          aria-expanded="false" aria-controls="search-dropdown">{{searchType.name}}
+        </button>
+        <ul id="search-dropdown" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="search-button">
+          <li role="menuitem" *ngFor="let option of searchOptions" (click)="setSearchType(option)">
+            <a class="dropdown-item">{{option.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <label for="search-bar"></label>
+    <input type="text" class="form-control" aria-label="Search in the FAB net" (keyup)="onKey($event)" id="search-bar">
+    <div class="input-group-append">
+      <button
+        class="btn btn-primary" type="button" aria-haspopup="true"
+         (click)="search()">Search
+      </button>
     </div>
   </div>
-  <label for="search-bar"></label>
-  <input type="text" class="form-control" aria-label="Text input with dropdown button" id="search-bar">
 </div>
-
-<div class="container text-truncate">
-  <h1 class="text-center">Search</h1>
-  <div class="form-group">
-    <input class="form-control" placeholder="Enter Block Hash">
-
-    <div class="text-right">
-      <button class="btn btn-primary m-4" (click)="searchBlockById(bId.value)">Submit</button>
-    </div>
-  </div>
-  <div>
-    <h2>The given Block Hash is invalid.</h2>
-  </div>
+<div class="container" *ngIf="searchFailed">
+  <h4 class="text-center">Failed to find {{searchType.name}}: {{searchValue}}</h4>
 </div>
+<ngx-spinner
+  bdColor="rgba(51, 51, 51, 0.8)"
+  size="large"
+  color="#fff"
+  type="ball-fall"
+></ngx-spinner>

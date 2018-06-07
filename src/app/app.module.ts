@@ -9,7 +9,7 @@ import {ComponentsModule} from './components/components.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from './core/core.module';
 import {ApiService, StateService} from './core/services';
-import {PaginationModule} from 'ngx-bootstrap';
+import {BsDropdownModule, PaginationModule} from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import {PaginationModule} from 'ngx-bootstrap';
     CoreModule,
     BrowserAnimationsModule,
     NgbModule.forRoot(),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    BsDropdownModule.forRoot()
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},

@@ -14,7 +14,7 @@ export class ApiService {
   }
 
   getBlockHash(height: number): Observable<string> {
-    return this.http.get<string>(`${this.fabAPIBase}/getblockhash/${height}`);
+    return this.http.get(`${this.fabAPIBase}/getblockhash/${height}`, {responseType: 'text'});
   }
 
   getAddressUTXOs(address: string): Observable<UTXO[]> {

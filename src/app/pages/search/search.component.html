@@ -1,10 +1,4 @@
-<app-search-bar></app-search-bar>
-<app-block-info *ngIf="(searchType === 'blockHash' || searchType === 'blockHeight') && !searching"></app-block-info>
-<app-transaction-info *ngIf="searchType === 'transaction' && !searching"></app-transaction-info>
-<app-address-info *ngIf="searchType === 'address' && !searching"></app-address-info>
-<ngx-spinner *ngIf="searching"
-  bdColor="rgba(51, 51, 51, 0.8)"
-  size="large"
-  color="#fff"
-  type="ball-fall"
-></ngx-spinner>
+<app-search-bar (searchResult)="onResult($event)"></app-search-bar>
+<app-block-info *ngIf="resultType ==='block'" [block]="searchResult"></app-block-info>
+<app-transaction-info *ngIf="resultType ==='tx'" [transaction]="searchResult"></app-transaction-info>
+<app-address-info *ngIf="resultType ==='addressInfo'" [address]="searchResult"></app-address-info>
