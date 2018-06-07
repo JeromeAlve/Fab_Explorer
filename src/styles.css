@@ -3,7 +3,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
 html * {
-  font-family: Titillium Web, sans-serif !important;
+  font-family: Titillium Web, sans-serif;
 }
 
 .left-truncate {
