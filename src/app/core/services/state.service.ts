@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 import { ApiService } from './api.service';
-import { timer } from 'rxjs';
-import { Observable } from 'rxjs/internal/Observable';
-import { Chain } from '../models';
-import { Subject } from 'rxjs/internal/Subject';
+import { timer, ReplaySubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Chain } from '../models';
 import { environment } from '../../../environments/environment';
 
 

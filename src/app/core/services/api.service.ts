@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs/internal/observable/of';
-import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Block, Chain, Tx, UTXO } from '../models';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { CacheService } from './cache.service';
 
 @Injectable()
