@@ -24,7 +24,7 @@ export class StateService {
   }
 
   private createTimer() {
-    this.updateTimer = timer(environment.updateFreq, environment.updateFreq)
+    this.updateTimer = timer(environment.updateFreq * 1000, environment.updateFreq * 1000)
       .pipe(
         takeUntil(this.timerStopper)
       );

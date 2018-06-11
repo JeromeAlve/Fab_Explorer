@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs/internal/observable/of';
+import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Block, Chain, Tx, UTXO } from '../models';
 import { Observable } from 'rxjs';
+import { CacheService } from './cache.service';
 
 @Injectable()
 export class ApiService {
@@ -10,7 +13,10 @@ export class ApiService {
   restAPIBase: string = environment.restAPIBase;
   fabAPIBase: string = environment.fabAPIBase;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private cache: CacheService
+  ) {
   }
 
   getBlockHash(height: number): Observable<string> {
@@ -30,12 +36,26 @@ export class ApiService {
 
   getBlockInfo(bId: string): Observable<Block> {
     console.log(`Loading block ${bId}`);
-    return this.http.get<Block>(`${this.restAPIBase}/block/${bId}.json`);
+    const inCache: Block = this.cache.get(bId);
+    if (!!inCache && !!inCache.nextblockhash) {
+      return of(inCache);
+    }
+    return this.http.get<Block>(`${this.restAPIBase}/block/${bId}.json`)
+      .pipe(
+        tap(data => this.cache.write(bId, data))
+      );
   }
 
   getTxInfo(tId: string): Observable<Tx> {
     console.log(`Loading transaction ${tId}`);
-    return this.http.get<Tx>(`${this.restAPIBase}/tx/${tId}.json`);
+    const inCache: Tx = this.cache.get(tId);
+    if (!!inCache) {
+      return of(inCache);
+    }
+    return this.http.get<Tx>(`${this.restAPIBase}/tx/${tId}.json`)
+      .pipe(
+        tap(data => this.cache.write(tId, data))
+      );
   }
 
 }
