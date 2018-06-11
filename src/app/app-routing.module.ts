@@ -1,5 +1,5 @@
-import {ExtraOptions, RouterModule, Routes} from '@angular/router';
-import {NgModule} from '@angular/core';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {path: 'transactions', loadChildren: './pages/view-transaction/view-transaction.module#ViewTransactionModule'},

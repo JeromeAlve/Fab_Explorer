@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AddressInfo} from '../../core/models/address.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { AddressInfo } from '../../core/models/address.model';
 
 @Component({
   selector: 'app-address-info',

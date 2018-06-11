@@ -1,11 +1,11 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LatestBlocksComponent} from './latest-blocks.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LatestBlocksComponent } from './latest-blocks.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: LatestBlocksComponent,
+    component: LatestBlocksComponent
   }
 ];
 
@@ -13,4 +13,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LatestBlocksRoutingModule {}
+export class LatestBlocksRoutingModule {
+}

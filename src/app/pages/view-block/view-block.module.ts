@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewBlockComponent } from './view-block.component';
-import {ViewBlockResolverService} from './view-block-resolver.service';
-import {ViewBlockRoutingModule} from './view-block-routing.module';
-import {ComponentsModule} from '../../components/components.module';
+import { ViewBlockResolverService } from './view-block-resolver.service';
+import { ViewBlockRoutingModule } from './view-block-routing.module';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   imports: [
@@ -14,4 +14,5 @@ import {ComponentsModule} from '../../components/components.module';
   declarations: [ViewBlockComponent],
   providers: [ViewBlockResolverService]
 })
-export class ViewBlockModule { }
+export class ViewBlockModule {
+}

@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  restAPIBase: 'http://35.182.160.212:18667/rest',
-  fabAPIBase: 'http://fabtest.info:9001/fabapi'
+  updateFreq: 35000,
+  restAPIBase: 'http://fabexplorer.info:8667/rest',
+  fabAPIBase: 'http://fabexplorer.info:9001/fabapi'
 };
 
 /*

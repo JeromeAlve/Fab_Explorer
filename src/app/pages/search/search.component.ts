@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Block, Tx} from '../../core/models';
-import {AddressInfo} from '../../core/models/address.model';
+import { Component, OnInit } from '@angular/core';
+import { Block, Tx } from '../../core/models';
+import { AddressInfo } from '../../core/models/address.model';
 
 @Component({
   selector: 'app-search',

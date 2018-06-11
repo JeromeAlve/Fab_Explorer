@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Block} from '../../core/models';
+import { Component, Input, OnInit } from '@angular/core';
+import { Block } from '../../core/models';
 
 @Component({
   selector: 'app-block-info',
@@ -9,7 +9,8 @@ import {Block} from '../../core/models';
 export class BlockInfoComponent implements OnInit {
   @Input() block: Block;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.block.date = new Date(this.block.time * 1000);

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Block} from '../../core/models';
-import {ActivatedRoute} from '@angular/router';
+import { Block } from '../../core/models';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-block',
@@ -12,10 +12,11 @@ export class ViewBlockComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    this.route.data.subscribe((data: {block: Block}) => {
+    this.route.data.subscribe((data: { block: Block }) => {
       this.block = data.block;
     });
   }

@@ -1,11 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SearchOption} from '../../core/models/search-options.model';
-import {toInteger} from '@ng-bootstrap/ng-bootstrap/util/util';
-import {ApiService} from '../../core/services';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {flatMap} from 'rxjs/operators';
-import {Block, Tx} from '../../core/models';
-import {AddressInfo} from '../../core/models/address.model';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ApiService } from '../../core/services';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { flatMap } from 'rxjs/operators';
+import { Block, Tx } from '../../core/models';
+import { AddressInfo } from '../../core/models/address.model';
+import { UtilsService } from '../../core/services/utils.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -16,32 +15,23 @@ export class SearchBarComponent implements OnInit {
   @Output() searchResult = new EventEmitter<{ data: Block | Tx | AddressInfo, type: string }>();
   searchFailed = false;
   displaySearchValue: string;
-
-  searchType: SearchOption;
   searchValue = '';
-  searchOptions: SearchOption[] = [{
-    name: 'Block Hash',
-    value: 'blockHash'
-  }, {
-    name: 'Block Height',
-    value: 'blockHeight'
-  }, {
-    name: 'Transaction Hash',
-    value: 'txHash'
-  }, {
-    name: 'Address',
-    value: 'address'
-  }];
 
   constructor(
     private api: ApiService,
+    private utils: UtilsService,
     private spinner: NgxSpinnerService
   ) {
   }
 
   ngOnInit() {
-    this.searchType = this.searchOptions[0];
   }
+
+  private onResult = (res, type) => {
+    this.searchResult.emit({data: res, type: type});
+    this.searchFailed = false;
+    this.spinner.hide();
+  };
 
   private caughtError = (err) => {
     console.error(err);
@@ -50,11 +40,6 @@ export class SearchBarComponent implements OnInit {
     this.searchResult.emit(null);
     this.spinner.hide();
   };
-
-  setSearchType(option: SearchOption) {
-    this.searchType = option;
-    this.searchFailed = false;
-  }
 
   onKey(event: any) {
     if (event.keyCode === 13) {
@@ -66,58 +51,44 @@ export class SearchBarComponent implements OnInit {
 
   search() {
     this.spinner.show();
-    switch (this.searchType.value) {
-      case 'blockHeight':
-        this.api.getBlockHash(toInteger(this.searchValue))
+    let searchType: string;
+    const sanitizedValue = this.searchValue.replace(/[^\w]/g, '');
+
+    if (!isNaN(Number(sanitizedValue))) {
+      searchType = 'block';
+    } else {
+      searchType = UtilsService.checkHashType(sanitizedValue);
+    }
+
+    switch (searchType) {
+      case 'block':
+        this.api.getBlockHash(Number(sanitizedValue))
           .pipe(
-            flatMap(hash => {
-              return this.api.getBlockInfo(hash);
-            })
+            flatMap(hash => this.api.getBlockInfo(hash))
           ).subscribe(
-          data => {
-            this.searchResult.emit({data: data, type: 'block'});
-            this.searchFailed = false;
-            this.spinner.hide();
-          },
-          this.caughtError
+          data => this.onResult(data, searchType), this.caughtError
         );
         break;
-      case 'blockHash':
-        this.api.getBlockInfo(this.searchValue)
-          .subscribe(data => {
-            this.searchResult.emit({data: data, type: 'block'});
-            this.searchFailed = false;
-            this.spinner.hide();
-          }, this.caughtError);
-        break;
-      case 'txHash':
-        this.api.getTxInfo(this.searchValue).subscribe(data => {
-          this.searchResult.emit({data: data, type: 'tx'});
-          this.searchFailed = false;
-          this.spinner.hide();
-        }, this.caughtError);
+      case 'tx':
+        this.api.getTxInfo(sanitizedValue)
+          .subscribe(data => this.onResult(data, searchType), this.caughtError);
         break;
       case 'address':
-        this.api.getAddressUTXOs(this.searchValue)
+        this.api.getAddressUTXOs(sanitizedValue)
           .subscribe(data => {
               let coinAmount = 0;
               data.forEach(utxo => coinAmount += utxo.value);
-              this.searchResult.emit({
-                data: {
-                  address: this.searchValue,
-                  transactions: data,
-                  coinAmount: coinAmount
-                },
-                type: 'addressInfo'
-              });
-              this.searchFailed = false;
-              this.spinner.hide();
+              this.onResult({
+                address: sanitizedValue,
+                transactions: data,
+                coinAmount: coinAmount
+              }, searchType);
             },
             this.caughtError
           );
         break;
       default:
-        console.error(`Unknown search type ${this.searchType}`);
+        console.error(`Unknown search type ${searchType}`);
     }
   }
 

@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {AddressInfo} from '../../core/models/address.model';
-import {flatMap} from 'rxjs/operators';
-import {ApiService} from '../../core/services';
-import {NgxSpinnerService} from 'ngx-spinner';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AddressInfo } from '../../core/models/address.model';
+import { flatMap } from 'rxjs/operators';
+import { ApiService } from '../../core/services';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-address',

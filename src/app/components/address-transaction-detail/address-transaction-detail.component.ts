@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UTXO} from '../../core/models';
-import {PageChangedEvent} from 'ngx-bootstrap';
+import { Component, Input, OnInit } from '@angular/core';
+import { UTXO } from '../../core/models';
+import { PageChangedEvent } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-address-transaction-detail',
@@ -15,8 +15,7 @@ export class AddressTransactionDetailComponent implements OnInit {
   rotate = true;
   maxPagesDisplayed = 5;
 
-  constructor(
-  ) {
+  constructor() {
   }
 
   ngOnInit() {

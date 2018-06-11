@@ -1,15 +1,13 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
-import {AppComponent} from './app.component';
-import {APP_BASE_HREF} from '@angular/common';
-import {AppRoutingModule} from './app-routing.module';
-import {ComponentsModule} from './components/components.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CoreModule} from './core/core.module';
-import {ApiService, StateService} from './core/services';
-import {BsDropdownModule, PaginationModule} from 'ngx-bootstrap';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AppComponent } from './app.component';
+import { APP_BASE_HREF } from '@angular/common';
+import { AppRoutingModule } from './app-routing.module';
+import { ComponentsModule } from './components/components.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreModule } from './core/core.module';
+import { BsDropdownModule, PaginationModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -19,16 +17,14 @@ import {BsDropdownModule, PaginationModule} from 'ngx-bootstrap';
     AppRoutingModule,
     BrowserModule,
     ComponentsModule,
-    CoreModule,
     BrowserAnimationsModule,
+    CoreModule.forRoot(),
     NgbModule.forRoot(),
     PaginationModule.forRoot(),
     BsDropdownModule.forRoot()
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-    ApiService,
-    StateService
+    {provide: APP_BASE_HREF, useValue: '/'}
   ],
   bootstrap: [AppComponent]
 })

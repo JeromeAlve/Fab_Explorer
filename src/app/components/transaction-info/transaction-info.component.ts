@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Tx} from '../../core/models';
+import { Component, Input, OnInit } from '@angular/core';
+import { Tx } from '../../core/models';
 
 @Component({
   selector: 'app-transaction-info',
@@ -9,7 +9,8 @@ import {Tx} from '../../core/models';
 export class TransactionInfoComponent implements OnInit {
   @Input() transaction: Tx;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

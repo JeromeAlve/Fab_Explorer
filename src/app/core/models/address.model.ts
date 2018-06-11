@@ -1,4 +1,4 @@
-import {UTXO} from './transaction.model';
+import { UTXO } from './transaction.model';
 
 export interface AddressInfo {
   address: string;

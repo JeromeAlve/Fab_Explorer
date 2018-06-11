@@ -1,4 +1,4 @@
- import {Tx} from './transaction.model';
+import { Tx } from './transaction.model';
 
 export interface Block {
   hash: string;

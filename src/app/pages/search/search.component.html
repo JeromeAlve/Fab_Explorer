@@ -1,4 +1,4 @@
 <app-search-bar (searchResult)="onResult($event)"></app-search-bar>
 <app-block-info *ngIf="resultType ==='block'" [block]="searchResult"></app-block-info>
 <app-transaction-info *ngIf="resultType ==='tx'" [transaction]="searchResult"></app-transaction-info>
-<app-address-info *ngIf="resultType ==='addressInfo'" [address]="searchResult"></app-address-info>
+<app-address-info *ngIf="resultType ==='address'" [address]="searchResult"></app-address-info>

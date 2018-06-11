@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {ApiService, StateService} from '../../core/services';
-import {Block} from '../../core/models';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { flatMap, take } from 'rxjs/operators';
+import { ApiService, StateService } from '../../core/services';
+import { Block } from '../../core/models';
 
 @Component({
   selector: 'app-latest-blocks',
   templateUrl: './latest-blocks.component.html',
   styleUrls: ['./latest-blocks.component.css']
 })
-export class LatestBlocksComponent implements OnInit {
+export class LatestBlocksComponent implements OnInit, OnDestroy {
   private topBlock: string;
   private currentBlockIndex: number;
   private currentBlocks: Block[] = [];
 
-  initialized = false;
   loading = true;
   displayedBlocks: Block[] = [];
   displayBlockNum = 5;
@@ -24,53 +24,70 @@ export class LatestBlocksComponent implements OnInit {
   }
 
   ngOnInit() {
-    const latestBlock = this.state.topBlockHash.getValue();
-    if (!!latestBlock) {
-      this.initBlock(latestBlock);
-    }
-
-    this.state.getLatestBlockHash()
+    this.initBlock();
+    this.state.startStateUpdate();
+    this.state.topBlockHash
+      .pipe(
+        flatMap(data => this.api.getBlockInfo(data))
+      )
       .subscribe(data => {
-        if (!this.initialized && data != null) {
-          this.initBlock(data);
+        if (this.currentBlocks.length > 0 && this.currentBlocks[0].height >= data.height) {
+          return;
         }
+
+        this.currentBlocks.unshift(data);
+        this.displayedBlocks = this.currentBlocks.slice(this.currentBlockIndex - this.displayBlockNum, this.currentBlockIndex);
       });
   }
 
-  initBlock(blockHash: string) {
-    this.topBlock = blockHash;
-    this.getBlocks(this.topBlock);
-    this.currentBlockIndex = this.displayBlockNum;
-    this.initialized = true;
+  ngOnDestroy() {
+    this.state.stopStateUpdate();
   }
 
-  isMoreNext(): boolean {
+  initBlock() {
+    this.state.topBlockHash
+      .pipe(
+        take(1)
+      )
+      .subscribe((data: string) => {
+        console.log(`Init explorer with block ${data}`);
+        this.topBlock = data;
+        this.getBlocks(this.topBlock)
+          .then(_ => console.log('Blocks loaded'))
+          .catch(err => console.error(err));
+
+        this.currentBlockIndex = this.displayBlockNum;
+      });
+  }
+
+  get isMoreNext(): boolean {
     return this.currentBlockIndex > this.displayBlockNum;
   }
 
-  isMorePrev(): boolean {
+  get isMorePrev(): boolean {
     return this.currentBlocks[this.currentBlocks.length - 1].height > 0;
   }
 
   getPrev() {
     const blockLen = this.currentBlocks.length;
 
-    if (!this.isMorePrev()) {
+    if (!this.isMorePrev) {
       return;
     }
 
-    if (this.currentBlockIndex === blockLen) {
-      this.displayedBlocks = [];
-      this.getBlocks(this.currentBlocks[blockLen - 1].previousblockhash, this.displayBlockNum);
-    } else {
-      this.displayedBlocks = this.currentBlocks.slice(this.currentBlockIndex, this.currentBlockIndex + this.displayBlockNum);
-    }
-
     this.currentBlockIndex += this.displayBlockNum;
+    const displayDelta = this.currentBlockIndex - blockLen;
+
+    if (displayDelta <= this.displayBlockNum && displayDelta > 0) {
+      const prevBlockHash = this.currentBlocks[blockLen - 1].previousblockhash;
+      this.getBlocks(prevBlockHash, displayDelta).catch(err => console.error(err));
+    } else {
+      this.displayedBlocks = this.currentBlocks.slice(this.currentBlockIndex - this.displayBlockNum, this.currentBlockIndex);
+    }
   }
 
   getNext() {
-    if (!this.isMoreNext()) {
+    if (!this.isMoreNext) {
       return;
     }
 
@@ -92,13 +109,14 @@ export class LatestBlocksComponent implements OnInit {
     if (numBlocks > 0) {
       this.loading = true;
       this.api.getBlockInfo(blockHash).subscribe(block => {
-        block.date = new Date(block.time * 1000);
         this.displayedBlocks.push(block);
+        if (this.displayedBlocks.length > this.displayBlockNum) {
+          this.displayedBlocks.splice(0, 1);
+        }
         this.currentBlocks.push(block);
 
         if (!!block.previousblockhash) {
           this.getBlocks(block.previousblockhash, numBlocks - 1)
-            .then(_ => console.log(`Loaded block ${block.previousblockhash}`))
             .catch(err => {
               console.error(err);
               this.loading = false;

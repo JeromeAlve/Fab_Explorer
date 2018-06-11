@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {ApiService, StateService} from '../../core/services';
-import {Chain} from '../../core/models';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { StateService } from '../../core/services';
+import { Chain } from '../../core/models';
 
 @Component({
   selector: 'app-chain-info',
   templateUrl: './chain-info.component.html',
   styleUrls: ['./chain-info.component.css']
 })
-export class ChainInfoComponent implements OnInit {
+export class ChainInfoComponent implements OnInit, OnDestroy {
 
   chainInfo: Chain;
 
@@ -17,13 +17,12 @@ export class ChainInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    const latestChain = this.state.currentChain.getValue();
-    if (!!latestChain) {
-      this.chainInfo = latestChain;
-    }
-    this.state.getChainInfo().subscribe(data => {
-      this.chainInfo = data;
-    });
+    this.state.currentChain.subscribe(data => this.chainInfo = data);
+    this.state.startStateUpdate();
+  }
+
+  ngOnDestroy() {
+    this.state.stopStateUpdate();
   }
 
 }
