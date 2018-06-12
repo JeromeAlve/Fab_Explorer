@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ApiService } from '../../core/services';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { flatMap } from 'rxjs/operators';
+import { catchError, flatMap } from 'rxjs/operators';
 import { Block, Tx } from '../../core/models';
 import { AddressInfo } from '../../core/models/address.model';
 import { UtilsService } from '../../core/services/utils.service';
@@ -69,9 +69,12 @@ export class SearchBarComponent implements OnInit {
           data => this.onResult(data, searchType), this.caughtError
         );
         break;
-      case 'tx':
+      case 'tx/block':
         this.api.getTxInfo(sanitizedValue)
-          .subscribe(data => this.onResult(data, searchType), this.caughtError);
+          .subscribe(
+            data => this.onResult(data, 'tx'),
+            _ => this.api.getBlockInfo(sanitizedValue).subscribe(data => this.onResult(data, 'block'), this.caughtError)
+          );
         break;
       case 'address':
         this.api.getAddressUTXOs(sanitizedValue)

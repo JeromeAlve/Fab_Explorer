@@ -34,10 +34,11 @@ export class CacheService {
     return (Date.now() / 1000 - this._expiryTime) > timestamp;
   }
 
-  public write(k: string, v: any) {
+  public write(k: string, v: any, type: string) {
     const data = {
       timestamp: Date.now() / 1000,
-      payload: v
+      payload: v,
+      type: type
     };
     this._cache.setItem(k, JSON.stringify(data));
   }
@@ -55,7 +56,7 @@ export class CacheService {
       return undefined;
     } else {
       console.log(`Loading ${k} from cache`);
-      return parsedData.payload;
+      return parsedData;
     }
   }
 }

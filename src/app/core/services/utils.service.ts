@@ -12,7 +12,7 @@ export class UtilsService {
       address.fromBase58Check(hash);
       return 'address';
     } catch (TypeError) {
-      return 'tx';
+      return 'tx/block';
     }
   }
 }

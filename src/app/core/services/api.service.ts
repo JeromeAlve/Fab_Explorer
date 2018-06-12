@@ -35,25 +35,25 @@ export class ApiService {
 
   getBlockInfo(bId: string): Observable<Block> {
     console.log(`Loading block ${bId}`);
-    const inCache: Block = this.cache.get(bId);
-    if (!!inCache && !!inCache.nextblockhash) {
-      return of(inCache);
+    const inCache = this.cache.get(bId);
+    if (!!inCache && !!inCache.nextblockhash && inCache.type === 'block') {
+      return of(inCache.payload);
     }
     return this.http.get<Block>(`${this.restAPIBase}/block/${bId}.json`)
       .pipe(
-        tap(data => this.cache.write(bId, data))
+        tap(data => this.cache.write(bId, data, 'block'))
       );
   }
 
   getTxInfo(tId: string): Observable<Tx> {
     console.log(`Loading transaction ${tId}`);
-    const inCache: Tx = this.cache.get(tId);
-    if (!!inCache) {
-      return of(inCache);
+    const inCache = this.cache.get(tId);
+    if (!!inCache && inCache.type === 'tx') {
+      return of(inCache.payload);
     }
     return this.http.get<Tx>(`${this.restAPIBase}/tx/${tId}.json`)
       .pipe(
-        tap(data => this.cache.write(tId, data))
+        tap(data => this.cache.write(tId, data, 'tx'))
       );
   }
 
