@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ApiService } from '../../core/services';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { catchError, flatMap } from 'rxjs/operators';
+import { flatMap } from 'rxjs/operators';
 import { Block, Tx } from '../../core/models';
 import { AddressInfo } from '../../core/models/address.model';
 import { UtilsService } from '../../core/services/utils.service';
@@ -14,8 +14,8 @@ import { UtilsService } from '../../core/services/utils.service';
 export class SearchBarComponent implements OnInit {
   @Output() searchResult = new EventEmitter<{ data: Block | Tx | AddressInfo, type: string }>();
   searchFailed = false;
-  displaySearchValue: string;
   searchValue = '';
+  searchError: string;
 
   constructor(
     private api: ApiService,
@@ -31,15 +31,23 @@ export class SearchBarComponent implements OnInit {
     this.searchResult.emit({data: res, type: type});
     this.searchFailed = false;
     this.spinner.hide();
-  };
+  }
 
-  private caughtError = (err) => {
+  private onError = (err) => {
+    this._caughtError(`Failed to find ${this.searchValue}`);
+    this.spinner.hide();
+  }
+
+  private searchTypeError() {
+    this._caughtError(`Invalid search value ${this.searchValue}`);
+  }
+
+  private _caughtError(err) {
     console.error(err);
     this.searchFailed = true;
-    this.displaySearchValue = this.searchValue;
+    this.searchError = err;
     this.searchResult.emit(null);
-    this.spinner.hide();
-  };
+  }
 
   onKey(event: any) {
     if (event.keyCode === 13) {
@@ -50,30 +58,39 @@ export class SearchBarComponent implements OnInit {
   }
 
   search() {
-    this.spinner.show();
     let searchType: string;
     const sanitizedValue = this.searchValue.replace(/[^\w]/g, '');
+
+    if (sanitizedValue === '') {
+      this.searchTypeError();
+      return;
+    }
 
     if (!isNaN(Number(sanitizedValue))) {
       searchType = 'block';
     } else {
       searchType = UtilsService.checkHashType(sanitizedValue);
+      if (!searchType) {
+        this.searchTypeError();
+        return;
+      }
     }
 
+    this.spinner.show();
     switch (searchType) {
       case 'block':
         this.api.getBlockHash(Number(sanitizedValue))
           .pipe(
             flatMap(hash => this.api.getBlockInfo(hash))
           ).subscribe(
-          data => this.onResult(data, searchType), this.caughtError
+          data => this.onResult(data, searchType), this.onError
         );
         break;
       case 'tx/block':
         this.api.getTxInfo(sanitizedValue)
           .subscribe(
             data => this.onResult(data, 'tx'),
-            _ => this.api.getBlockInfo(sanitizedValue).subscribe(data => this.onResult(data, 'block'), this.caughtError)
+            _ => this.api.getBlockInfo(sanitizedValue).subscribe(data => this.onResult(data, 'block'), this.onError)
           );
         break;
       case 'address':
@@ -87,7 +104,7 @@ export class SearchBarComponent implements OnInit {
                 coinAmount: coinAmount
               }, searchType);
             },
-            this.caughtError
+            this.onError
           );
         break;
       default:
