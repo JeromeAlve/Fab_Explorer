@@ -19,6 +19,7 @@ export class AddressTransactionDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.transactions = this.transactions.reverse();
     this.displayedTransactions = this.transactions.slice(0, this.itemsPerPage);
   }
 
