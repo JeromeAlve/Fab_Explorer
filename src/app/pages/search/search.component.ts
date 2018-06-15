@@ -53,6 +53,7 @@ export class SearchComponent implements OnInit {
     console.error(err);
     this.searchFailed = true;
     this.searchError = err;
+    this.resultType = null;
   }
 
   search(searchValue) {
