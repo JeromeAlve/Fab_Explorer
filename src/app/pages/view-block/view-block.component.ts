@@ -20,5 +20,4 @@ export class ViewBlockComponent implements OnInit {
       this.block = data.block;
     });
   }
-
 }

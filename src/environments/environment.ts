@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   updateFreq: 35,
-  restAPIBase: 'http://fabtest.info:18667/rest',
-  fabAPIBase: 'http://fabtest.info:9001/fabapi',
+  restAPIBase: 'http://fabcoins.online:28667/rest',
+  fabAPIBase: 'http://fabcoins.online:9001/fabapi',
   cacheExpireTime: 60 * 60 * 24,
   autoExpireSearch: 60 * 2
 };
