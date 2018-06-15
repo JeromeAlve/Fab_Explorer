@@ -9,7 +9,10 @@
             <b> Height : </b> {{block.height}}
             <br>
             <b> Previous Block :</b>
-            <a [routerLink]="['/blocks', block.previousblockhash]"> {{block.height - 1}} </a>
+            <span *ngIf="!!block.previousblockhash">
+              <a [routerLink]="['/blocks', block.previousblockhash]"> {{block.height - 1}} </a>
+            </span>
+            <span *ngIf="!block.previousblockhash"> No previous block </span>
             <br>
             <b> Difficulty :</b> {{block.difficulty}}
             <br>
@@ -27,9 +30,9 @@
           <div class=" m-4">
             <b> Next Block :</b>
             <span *ngIf="block.nextblockhash">
-            <a [routerLink]="['/blocks', block.nextblockhash]"> {{block.height + 1}}</a>
-          </span>
-            <span *ngIf="!block.nextblockhash">No New Block</span>
+              <a [routerLink]="['/blocks', block.nextblockhash]"> {{block.height + 1}}</a>
+            </span>
+            <span *ngIf="!block.nextblockhash"> No New Block </span>
             <br>
             <b> Transactions :</b> {{block.tx.length}}
             <br>
