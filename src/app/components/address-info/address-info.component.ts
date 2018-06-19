@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AddressInfo } from '../../core/models/address.model';
+import { AddressInfo } from '../../core/models';
 import { ApiService } from '../../core/services';
 
 @Component({
@@ -28,7 +28,10 @@ export class AddressInfoComponent implements OnInit {
           this.address.transactions = res.utxos === null ? [] : res.utxos;
           this.spinner.hide();
         },
-        _ => this.spinner.hide()
+        err => {
+          console.error(err);
+          this.spinner.hide();
+        }
       );
   }
 }

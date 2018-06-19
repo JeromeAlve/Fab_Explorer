@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { add } from 'ngx-bootstrap/chronos';
 import { environment } from '../../../environments/environment';
 import { AddressBalance, Block, Chain, Tx, UTXO } from '../models';
 import { Observable, of } from 'rxjs';
@@ -57,14 +56,7 @@ export class ApiService {
   }
 
   getAddressTransactions(address: string): Observable<AddressTransactions> {
-    const inCache = this.cache.get(`${address}-utxos`);
-    if (!!inCache && inCache.type === 'address-utxos') {
-      return of(inCache.payload);
-    }
-    return this.http.get<AddressTransactions>(`${this.utxoAPIBase}/transactions/${address}`)
-      .pipe(
-        tap(data => this.cache.write(`${address}-utxos`, data, 'address-utxos', 'short'))
-      );
+    return this.http.get<AddressTransactions>(`${this.utxoAPIBase}/transactions/${address}`);
   }
 
   getTopAddresses(): Observable<AddressBalance[]> {

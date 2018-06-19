@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UTXO } from '../../core/models';
 import { PageChangedEvent } from 'ngx-bootstrap';
 import { TxSummary } from '../../core/models/transaction.model';
 
