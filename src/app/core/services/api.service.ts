@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { add } from 'ngx-bootstrap/chronos';
 import { environment } from '../../../environments/environment';
-import { Block, Chain, Tx, UTXO } from '../models';
+import { AddressBalance, Block, Chain, Tx, UTXO } from '../models';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { flatMap, tap } from 'rxjs/operators';
+import { AddressTransactions } from '../models/address.model';
 import { CacheService } from './cache.service';
 
 @Injectable()
@@ -11,6 +13,7 @@ export class ApiService {
 
   restAPIBase: string = environment.restAPIBase;
   fabAPIBase: string = environment.fabAPIBase;
+  utxoAPIBase: string = environment.utxoAPIBase;
 
   constructor(
     private http: HttpClient,
@@ -39,6 +42,42 @@ export class ApiService {
     return this.http.get<UTXO[]>(`${this.fabAPIBase}/unspenttransactionpolicy/${address}`)
       .pipe(
         tap(data => this.cache.write(address, data, 'address', 'short'))
+      );
+  }
+
+  getAccountBalance(address: string): Observable<AddressBalance> {
+    const inCache = this.cache.get(`${address}-balance`);
+    if (!!inCache && inCache.type === 'block-balance') {
+      return of(inCache.payload);
+    }
+    return this.http.get<AddressBalance>(`${this.utxoAPIBase}/balance/${address}`)
+      .pipe(
+        tap(data => this.cache.write(`${address}-balance`, data, 'address-balance', 'short'))
+      );
+  }
+
+  getAddressTransactions(address: string): Observable<AddressTransactions> {
+    const inCache = this.cache.get(`${address}-utxos`);
+    if (!!inCache && inCache.type === 'address-utxos') {
+      return of(inCache.payload);
+    }
+    return this.http.get<AddressTransactions>(`${this.utxoAPIBase}/transactions/${address}`)
+      .pipe(
+        tap(data => this.cache.write(`${address}-utxos`, data, 'address-utxos', 'short'))
+      );
+  }
+
+  getTopAddresses(): Observable<AddressBalance[]> {
+    const inCache = this.cache.get('top-addresses');
+    if (!!inCache && inCache.type === 'top-addresses') {
+      return of(inCache.payload);
+    }
+    return this.http.get<{result: AddressBalance[]}>(`${this.utxoAPIBase}/top-addresses`)
+      .pipe(
+        flatMap(data => {
+          this.cache.write('top-addresses', data.result, 'top-addresses', 'short');
+          return of(data.result);
+        })
       );
   }
 

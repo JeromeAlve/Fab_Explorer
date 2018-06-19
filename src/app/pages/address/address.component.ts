@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AddressInfo } from '../../core/models/address.model';
+import { AddressInfo } from '../../core/models';
 import { flatMap } from 'rxjs/operators';
 import { ApiService } from '../../core/services';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -28,16 +28,12 @@ export class AddressComponent implements OnInit {
     this.spinner.show();
     this.route.params.pipe(
       flatMap(params => {
-        console.log(params);
         this.info.address = params.address;
-        return this.api.getAddressUTXOs(params.address);
+        return this.api.getAccountBalance(params.address);
       })
     ).subscribe(
       res => {
-        let coinAmount = 0;
-        res.forEach(utxo => coinAmount += utxo.value);
-        this.info.transactions = res;
-        this.info.coinAmount = coinAmount;
+        this.info.coinAmount = res.balance;
         this.spinner.hide();
       }
     );

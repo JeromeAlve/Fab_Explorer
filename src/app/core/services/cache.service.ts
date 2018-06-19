@@ -15,6 +15,8 @@ export class CacheService {
   }
 
   private async autoEvictExpired() {
+    console.log('Local cache cleaning service running');
+    const start = Number(new Date());
     const dataToRemove = [];
 
     for (const i in this._cache) {
@@ -29,6 +31,8 @@ export class CacheService {
     for (let i = 0; i < dataToRemove.length; ++i) {
       this._cache.removeItem(dataToRemove[i]);
     }
+    const end = Number(new Date());
+    console.log(`Finished cleaning local cache in ${end - start}ms, cleaned up ${dataToRemove.length} cache entries`);
   }
 
   private isExpired(data: any) {

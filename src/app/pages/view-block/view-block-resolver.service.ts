@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { flatMap } from 'rxjs/operators';
 
 import { Block } from '../../core/models';
 import { Observable } from 'rxjs';
@@ -16,6 +17,15 @@ export class ViewBlockResolverService implements Resolve<Block> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<Block> {
-    return this.api.getBlockInfo(route.params.blockHash);
+    if (isNaN(Number(route.params.blockHash))) {
+      return this.api.getBlockInfo(route.params.blockHash);
+    }
+
+    return this.api.getBlockHash(Number(route.params.blockHash))
+      .pipe(
+        flatMap(
+          blockHash => this.api.getBlockInfo(blockHash)
+        )
+      );
   }
 }

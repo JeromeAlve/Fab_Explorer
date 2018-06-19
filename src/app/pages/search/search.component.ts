@@ -99,14 +99,12 @@ export class SearchComponent implements OnInit {
           );
         break;
       case 'address':
-        this.api.getAddressUTXOs(sanitizedValue)
+        this.api.getAccountBalance(sanitizedValue)
           .subscribe(data => {
-              let coinAmount = 0;
-              data.forEach(utxo => coinAmount += utxo.value);
               this.onResult({
                 address: sanitizedValue,
-                transactions: data,
-                coinAmount: coinAmount
+                transactions: null,
+                coinAmount: data.balance
               }, searchType);
             },
             err => this.onError(err, searchValue)

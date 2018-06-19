@@ -18,7 +18,6 @@ export class SearchBarComponent implements OnInit {
   }
 
   search() {
-    console.log(this.searchValue);
     this.router.navigate(['/search', this.searchValue])
       .catch(err => console.error(err));
   }

@@ -49,8 +49,8 @@
               <li class="list-group-item" *ngIf="!!vt.scriptPubKey.addresses && !!vt.scriptPubKey.addresses.length">
                 <h5>Addresses</h5>
                 <div *ngFor="let addr of vt.scriptPubKey.addresses" class="text-truncate">
-                  <!--<a [routerLink]="['/address-info', addr]">{{addr}}</a>-->
-                  {{addr}}
+                  <a [routerLink]="['/address-info', addr]">{{addr}}</a>
+                  <!--{{addr}}-->
                 </div>
               </li>
             </ul>

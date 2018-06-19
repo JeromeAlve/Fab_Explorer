@@ -8,6 +8,7 @@ const routes: Routes = [
   {path: 'chain', loadChildren: './pages/chain-info/chain-info.module#ChainInfoModule'},
   {path: 'latest-blocks', loadChildren: './pages/latest-blocks/latest-blocks.module#LatestBlocksModule'},
   {path: 'address-info', loadChildren: './pages/address/address.module#AddressModule'},
+  {path: 'top-addresses', loadChildren: './pages/top-addresses/top-addresses.module#TopAddressesModule'},
   {path: '', redirectTo: 'latest-blocks', pathMatch: 'full'},
   {path: '**', redirectTo: 'latest-blocks'},
 ];
