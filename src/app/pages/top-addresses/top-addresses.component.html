@@ -16,7 +16,7 @@
             <th scope="row">
               <a [routerLink]="['/address-info', address.address]">{{address.address}} </a>
             </th>
-            <td>{{address.balance}}</td>
+            <td>{{address.balance | currency:undefined:' ':'1.0-8'}}</td>
           </tr>
           </tbody>
         </table>

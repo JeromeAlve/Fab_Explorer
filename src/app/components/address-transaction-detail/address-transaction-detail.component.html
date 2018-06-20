@@ -25,7 +25,7 @@
         <a [routerLink]="['/blocks', transaction.block]">{{transaction.block}}</a>
       </td>
       <td scope="row">{{transaction.sequence}}</td>
-      <td scope="row">{{transaction.value >= 0 ? '+' : ''}}{{transaction.value}}</td>
+      <td scope="row">{{transaction.value >= 0 ? '+' : ''}}{{transaction.value | currency:undefined:' ':'1.0-8'}}</td>
     </tr>
     </tbody>
   </table>
