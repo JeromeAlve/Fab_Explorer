@@ -11,7 +11,7 @@ import { ApiService } from '../../core/services';
 })
 export class TopAddressesComponent implements OnInit {
   topAddresses: AddressBalance[];
-  itemsPerPage = 10;
+  marketCap: number;
   rotate = true;
   maxPagesDisplayed = 5;
   totalNum: number;
@@ -24,6 +24,8 @@ export class TopAddressesComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
+    this.api.getMarketCap()
+      .subscribe(data => this.marketCap = data.marketCap);
     this.api.getTopAddresses()
       .subscribe(
         data => {

@@ -3,6 +3,7 @@
 
   <!-- when the transaction is loaded-->
   <div class="text-truncate" *ngIf="!!topAddresses">
+    <h5 class="text-center">Market Cap: {{marketCap | currency:undefined:' ':'1.0-2'}}</h5>
       <div class="table-responsive col-lg-12 col-md-12">
         <table class="table">
           <thead>
@@ -16,7 +17,7 @@
             <th scope="row">
               <a [routerLink]="['/address-info', address.address]">{{address.address}} </a>
             </th>
-            <td>{{address.balance | currency:undefined:' ':'1.0-8'}}</td>
+            <td>{{address.balance | currency:undefined:' ':'1.0-2'}}</td>
           </tr>
           </tbody>
         </table>

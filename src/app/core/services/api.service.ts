@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { script } from 'bitcoinjs-lib';
 import { environment } from '../../../environments/environment';
 import { AddressBalance, Block, Chain, Tx, UTXO } from '../models';
 import { Observable, of } from 'rxjs';
 import { flatMap, tap } from 'rxjs/operators';
 import { AddressTransactions } from '../models/address.model';
 import { CacheService } from './cache.service';
+import number = script.number;
 
 @Injectable()
 export class ApiService {
@@ -69,6 +71,10 @@ export class ApiService {
       .pipe(
         flatMap(data => of({result: data.result, totalAddrNum: data.totalAddrNum}))
       );
+  }
+
+  getMarketCap(): Observable<{marketCap: number}> {
+    return this.http.get<{marketCap: number}>(`${this.utxoAPIBase}/market-cap`);
   }
 
   getChainInfo(): Observable<Chain> {
