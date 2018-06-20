@@ -30,7 +30,7 @@
         <td>
           <span class="text-nowrap"> {{ block.time | convertDate | date:'MMM dd, yyyy '}} </span>
           <br>
-          <span>{{block.time | convertDate | date:' hh:mm a' }}</span>
+          <span>{{block.time | convertDate | date:' hh:mm:ss a' }}</span>
         </td>
         <td>{{block.tx.length}}</td>
         <td>{{block.size}}</td>

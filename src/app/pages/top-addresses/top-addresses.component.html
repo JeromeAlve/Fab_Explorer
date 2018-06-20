@@ -9,15 +9,15 @@
         <thead>
         <tr>
           <th scope="col" class="text-center">Rank</th>
-          <th scope="col" class="text-center">Address</th>
+          <th scope="col" class="text-left">Address</th>
           <th scope="col" class="text-right">Balance</th>
         </tr>
         </thead>
         <tbody>
         <tr class="text-right" *ngFor="let address of topAddresses; let i = index;">
           <td class="text-center">{{(currentPage - 1) * 10 + i + 1}}</td>
-          <td scope="row" class="text-center">
-            <a [routerLink]="['/address-info', address.address]">{{address.address}}</a>
+          <td scope="row" class="text-left text">
+            <span><a [routerLink]="['/address-info', address.address]">{{address.address}}</a></span>
           </td>
           <td>{{address.balance | currency:undefined:' ':'1.2-2'}}</td>
         </tr>
