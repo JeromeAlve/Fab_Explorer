@@ -3,15 +3,15 @@
   <table class="table">
     <thead>
     <tr>
-      <th scope="col">Transaction ID</th>
-      <th scope="col">Block</th>
-      <th scope="col">Sequence</th>
-      <th scope="col">Value</th>
+      <th scope="col" class="text-center">Transaction ID</th>
+      <th scope="col" class="text-center">Block</th>
+      <th scope="col" class="text-center">Sequence</th>
+      <th scope="col" class="text-right">Value</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let transaction of displayedTransactions">
-      <td scope="row" class="text">
+      <td scope="row" class="text-center">
           <span>
             <a [routerLink]="['/transactions', transaction.txid]">{{transaction.txid}}</a>
           </span>
@@ -21,11 +21,11 @@
       <!--<br>-->
       <!--<span>{{transaction.createdate | convertDate | date:' hh:mm a' }}</span>-->
       <!--</td>-->
-      <td scope="row">
+      <td scope="row" class="text-center">
         <a [routerLink]="['/blocks', transaction.block]">{{transaction.block}}</a>
       </td>
-      <td scope="row">{{transaction.sequence}}</td>
-      <td scope="row">{{transaction.value >= 0 ? '+' : ''}}{{transaction.value | currency:undefined:' ':'1.0-2'}}</td>
+      <td scope="row" class="text-center">{{transaction.sequence}}</td>
+      <td scope="row" class="text-right">{{transaction.value >= 0 ? '+' : ''}}{{transaction.value | currency:undefined:' ':'1.2-2'}}</td>
     </tr>
     </tbody>
   </table>
@@ -34,6 +34,7 @@
               [rotate]="rotate"
               [maxSize]="maxPagesDisplayed"
               (pageChanged)="pageChanged($event)"
+              [boundaryLinks]="true"
   >
   </pagination>
 </div>

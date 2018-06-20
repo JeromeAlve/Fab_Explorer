@@ -15,6 +15,7 @@ export class TopAddressesComponent implements OnInit {
   rotate = true;
   maxPagesDisplayed = 5;
   totalNum: number;
+  currentPage = 1;
 
   constructor(
     private api: ApiService,
@@ -38,6 +39,7 @@ export class TopAddressesComponent implements OnInit {
   }
 
   pageChanged(event: PageChangedEvent): void {
+    this.currentPage = event.page;
     const startItem = (event.page - 1) * event.itemsPerPage;
     const endItem = event.page * event.itemsPerPage;
     this.api.getTopAddresses(startItem, endItem)
