@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  branch = "master"
+  name = "github.com/bradfitz/slice"
+  packages = ["."]
+  revision = "d9036e2120b5ddfa53f3ebccd618c4af275f47da"
+
+[[projects]]
   name = "github.com/gin-contrib/cors"
   packages = ["."]
   revision = "cf4846e6a636a76237a28d9286f163c132e841bc"
@@ -61,6 +67,12 @@
 
 [[projects]]
   branch = "master"
+  name = "go4.org"
+  packages = ["reflectutil"]
+  revision = "9599cf28b011184741f249bd9f9330756b506cbc"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
   revision = "6c888cc515d3ed83fc103cf1d84468aad274b0a7"
@@ -80,6 +92,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0e55c019855a1cff4cf079f93fcc689f05e61918ec47c11c81976988650f80e7"
+  inputs-digest = "04d0fa42a5a3c455f2d3fdcf6ddbda6a21c23f66734d49afe04522bbc5f30a97"
   solver-name = "gps-cdcl"
   solver-version = 1
