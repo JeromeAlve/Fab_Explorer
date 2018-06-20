@@ -11,10 +11,10 @@ import { ApiService } from '../../core/services';
 })
 export class TopAddressesComponent implements OnInit {
   topAddresses: AddressBalance[];
-  displayAddresses: AddressBalance[];
   itemsPerPage = 10;
   rotate = true;
   maxPagesDisplayed = 5;
+  totalNum: number;
 
   constructor(
     private api: ApiService,
@@ -27,8 +27,8 @@ export class TopAddressesComponent implements OnInit {
     this.api.getTopAddresses()
       .subscribe(
         data => {
-          this.topAddresses = data;
-          this.displayAddresses = this.topAddresses.slice(0, this.itemsPerPage);
+          this.topAddresses = data.result;
+          this.totalNum = data.totalAddrNum;
           this.spinner.hide();
         },
         _ => this.spinner.hide()
@@ -38,7 +38,16 @@ export class TopAddressesComponent implements OnInit {
   pageChanged(event: PageChangedEvent): void {
     const startItem = (event.page - 1) * event.itemsPerPage;
     const endItem = event.page * event.itemsPerPage;
-    this.displayAddresses = this.topAddresses.slice(startItem, endItem);
+    this.api.getTopAddresses(startItem, endItem)
+      .subscribe(
+        data => {
+          this.topAddresses = data.result;
+          this.totalNum = data.totalAddrNum;
+          this.spinner.hide();
+        },
+        _ => this.spinner.hide()
+      );
+    this.topAddresses.slice(startItem, endItem);
   }
 
 }

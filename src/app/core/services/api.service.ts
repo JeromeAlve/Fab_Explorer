@@ -59,17 +59,15 @@ export class ApiService {
     return this.http.get<AddressTransactions>(`${this.utxoAPIBase}/transactions/${address}`);
   }
 
-  getTopAddresses(): Observable<AddressBalance[]> {
-    const inCache = this.cache.get('top-addresses');
-    if (!!inCache && inCache.type === 'top-addresses') {
-      return of(inCache.payload);
-    }
-    return this.http.get<{result: AddressBalance[]}>(`${this.utxoAPIBase}/top-addresses`)
+  getTopAddresses(start: number = 0, end: number = 10): Observable<{result: AddressBalance[], totalAddrNum: number}> {
+    return this.http.get<{result: AddressBalance[], totalAddrNum: number}>(`${this.utxoAPIBase}/top-addresses`, {
+      params: {
+        start: start.toString(),
+        end: end.toString()
+      }
+    })
       .pipe(
-        flatMap(data => {
-          this.cache.write('top-addresses', data.result, 'top-addresses', 'short');
-          return of(data.result);
-        })
+        flatMap(data => of({result: data.result, totalAddrNum: data.totalAddrNum}))
       );
   }
 

@@ -35,7 +35,8 @@ export class AddressComponent implements OnInit {
       res => {
         this.info.coinAmount = res.balance;
         this.spinner.hide();
-      }
+      },
+      err => this.spinner.hide()
     );
   }
 }

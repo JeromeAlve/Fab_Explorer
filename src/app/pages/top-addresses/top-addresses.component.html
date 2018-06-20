@@ -12,7 +12,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr class="text-left" *ngFor="let address of displayAddresses">
+          <tr class="text-left" *ngFor="let address of topAddresses">
             <th scope="row">
               <a [routerLink]="['/address-info', address.address]">{{address.address}} </a>
             </th>
@@ -21,7 +21,7 @@
           </tbody>
         </table>
         <pagination class="justify-content-center"
-                    [totalItems]="topAddresses.length"
+                    [totalItems]="totalNum"
                     [rotate]="rotate"
                     [maxSize]="maxPagesDisplayed"
                     (pageChanged)="pageChanged($event)"
