@@ -20,5 +20,4 @@ export class ViewTransactionComponent implements OnInit {
       this.transaction = data.transaction;
     });
   }
-
 }

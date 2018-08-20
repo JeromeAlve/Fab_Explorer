@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AddressInfo } from '../../core/models/address.model';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AddressInfo } from '../../core/models';
+import { ApiService } from '../../core/services';
 
 @Component({
   selector: 'app-address-info',
@@ -9,10 +11,27 @@ import { AddressInfo } from '../../core/models/address.model';
 export class AddressInfoComponent implements OnInit {
   @Input() address: AddressInfo;
 
-  constructor() {
+  constructor(
+    private spinner: NgxSpinnerService,
+    private api: ApiService
+  ) {
   }
 
   ngOnInit() {
   }
 
+  loadAllTransactions() {
+    this.spinner.show();
+    this.api.getAddressTransactions(this.address.address)
+      .subscribe(
+        res => {
+          this.address.transactions = res.utxos === null ? [] : res.utxos;
+          this.spinner.hide();
+        },
+        err => {
+          console.error(err);
+          this.spinner.hide();
+        }
+      );
+  }
 }

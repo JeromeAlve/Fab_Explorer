@@ -5,7 +5,8 @@ import { timer } from 'rxjs';
 @Injectable()
 export class CacheService {
   private _cache = localStorage;
-  private _expiryTime = environment.cacheExpireTime;
+  private _longExpiry = environment.cacheExpireTime;
+  private _shortExpiry = environment.updateFreq;
   private _autoExpireSearch = environment.autoExpireSearch * 1000;
   private _expiryRunner = timer(0, this._autoExpireSearch);
 
@@ -14,12 +15,14 @@ export class CacheService {
   }
 
   private async autoEvictExpired() {
+    console.log('Local cache cleaning service running');
+    const start = Number(new Date());
     const dataToRemove = [];
 
     for (const i in this._cache) {
       if (this._cache.hasOwnProperty(i)) {
         const v = this._cache.getItem(i);
-        if (!!v && this.isExpired(JSON.parse(v).timestamp)) {
+        if (!!v && this.isExpired(JSON.parse(v))) {
           dataToRemove.push(i);
         }
       }
@@ -28,17 +31,21 @@ export class CacheService {
     for (let i = 0; i < dataToRemove.length; ++i) {
       this._cache.removeItem(dataToRemove[i]);
     }
+    const end = Number(new Date());
+    console.log(`Finished cleaning local cache in ${end - start}ms, cleaned up ${dataToRemove.length} cache entries`);
   }
 
-  private isExpired(timestamp: number) {
-    return (Date.now() / 1000 - this._expiryTime) > timestamp;
+  private isExpired(data: any) {
+    const expiry = !!data.expiry && data.expiry === 'short' ? this._shortExpiry : this._longExpiry;
+    return (Date.now() / 1000 - expiry) > data.timestamp;
   }
 
-  public write(k: string, v: any, type: string) {
+  public write(k: string, v: any, type: string, expiry = 'long') {
     const data = {
       timestamp: Date.now() / 1000,
       payload: v,
-      type: type
+      type: type,
+      expiry: expiry
     };
     this._cache.setItem(k, JSON.stringify(data));
   }

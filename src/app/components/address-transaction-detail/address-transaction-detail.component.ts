@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UTXO } from '../../core/models';
 import { PageChangedEvent } from 'ngx-bootstrap';
+import { TxSummary } from '../../core/models/transaction.model';
 
 @Component({
   selector: 'app-address-transaction-detail',
@@ -9,8 +9,8 @@ import { PageChangedEvent } from 'ngx-bootstrap';
 })
 export class AddressTransactionDetailComponent implements OnInit {
 
-  @Input() transactions: UTXO[];
-  displayedTransactions: UTXO[];
+  @Input() transactions: TxSummary[];
+  displayedTransactions: TxSummary[];
   itemsPerPage = 10;
   rotate = true;
   maxPagesDisplayed = 5;
@@ -19,6 +19,7 @@ export class AddressTransactionDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.transactions = this.transactions.reverse();
     this.displayedTransactions = this.transactions.slice(0, this.itemsPerPage);
   }
 

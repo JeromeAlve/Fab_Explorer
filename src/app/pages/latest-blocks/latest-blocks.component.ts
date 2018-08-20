@@ -127,5 +127,4 @@ export class LatestBlocksComponent implements OnInit, OnDestroy {
       this.loading = false;
     }
   }
-
 }

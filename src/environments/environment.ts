@@ -7,6 +7,7 @@ export const environment = {
   updateFreq: 35,
   restAPIBase: 'http://fabexplorer.info:8667/rest',
   fabAPIBase: 'http://fabexplorer.info:9001/fabapi',
+  utxoAPIBase: 'http://fabexplorer.info:8666',
   cacheExpireTime: 60 * 60 * 24,
   autoExpireSearch: 60 * 2
 };

@@ -18,6 +18,13 @@ export interface UTXO {
   createdate: string;
 }
 
+export interface TxSummary {
+  value: number;
+  txid: string;
+  block: number;
+  sequence: number;
+}
+
 export interface TxVin {
   coinbase: string | null;
   sequence: number;

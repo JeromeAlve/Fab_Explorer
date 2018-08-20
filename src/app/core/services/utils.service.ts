@@ -12,6 +12,9 @@ export class UtilsService {
       address.fromBase58Check(hash);
       return 'address';
     } catch (TypeError) {
+      if (hash.length !== 64) {
+        return null;
+      }
       return 'tx/block';
     }
   }

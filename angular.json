@@ -98,6 +98,9 @@
             },
             "test": {
               "browserTarget": "explorer:build:test"
+            },
+            "smartContract": {
+              "browserTarget": "explorer:build:smartContract"
             }
           }
         },
