@@ -8,11 +8,8 @@ const routes: Routes = [
   {path: 'chain', loadChildren: './pages/chain-info/chain-info.module#ChainInfoModule'},
   {path: 'latest-blocks', loadChildren: './pages/latest-blocks/latest-blocks.module#LatestBlocksModule'},
   {path: 'address-info', loadChildren: './pages/address/address.module#AddressModule'},
-<<<<<<< HEAD
   {path: 'monitoring', loadChildren: './pages/monitoring/monitoring.module#MonitoringModule'},
-=======
   {path: 'top-addresses', loadChildren: './pages/top-addresses/top-addresses.module#TopAddressesModule'},
->>>>>>> 15320edc2c6e9c9e1e1ca314d0f8cce3f66fd7ce
   {path: '', redirectTo: 'latest-blocks', pathMatch: 'full'},
   {path: '**', redirectTo: 'latest-blocks'},
 ];

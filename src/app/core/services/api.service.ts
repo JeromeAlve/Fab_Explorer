@@ -1,17 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { script } from 'bitcoinjs-lib';
-import { environment } from '../../../environments/environment';
-<<<<<<< HEAD
-import { Block, Chain, Tx, UTXO, ChainTip } from '../models';
-import { Observable, of } from 'rxjs';
+import { environment } from '../../../environments/environment';;
 import { tap, publishReplay } from 'rxjs/operators';
-=======
-import { AddressBalance, Block, Chain, Tx, UTXO } from '../models';
+import { AddressBalance, Block, Chain, Tx, UTXO, ChainTip} from '../models';
 import { Observable, of } from 'rxjs';
-import { flatMap, tap } from 'rxjs/operators';
+import { flatMap } from 'rxjs/operators';
 import { AddressTransactions } from '../models/address.model';
->>>>>>> 15320edc2c6e9c9e1e1ca314d0f8cce3f66fd7ce
 import { CacheService } from './cache.service';
 import number = script.number;
 

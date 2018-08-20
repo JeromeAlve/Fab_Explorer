@@ -70,6 +70,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() { //charts inside this function will update in realtime (future data)
+    this.getChainTips();
 
     const canvas4 = <HTMLCanvasElement>document.getElementById("intervalChart");
     var context4 = canvas4.getContext("2d");
@@ -119,7 +120,6 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     });
 
     this.initBlock();
-    this.getChainTips();
     this.state.startStateUpdate();
     this.state.topBlockHash
       .pipe(
@@ -252,8 +252,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           
         }
 
-
-        this.getChainTips();
+  
 
         this.chainLabels = new Array(50);
         this.chainData = new Array(50);
@@ -266,7 +265,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
         this.chart3.destroy();
 
         const canvas3 = <HTMLCanvasElement>document.getElementById("tipsChart");
-            var context3 = canvas3.getContext("2d");
+        var context3 = canvas3.getContext("2d");
             this.chart3 = new Chart(context3, {
               type: 'bar',
               data: {
@@ -310,7 +309,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
                   }]
                 }
               }
-            });
+          });
 
       });
   }
@@ -322,8 +321,9 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   //get ChainTip objects into chainTips[]
   getChainTips(){
     this.api.getChainTips()
-      .subscribe(chainTips => {
-        this.chainTips = chainTips;
+      .subscribe(data => {
+        this.chainTips = data;
+        console.log(this.chainTips);
       }
     );
   }
