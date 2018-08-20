@@ -21,4 +21,5 @@ export interface Block {
   chainwork: string;
   previousblockhash: string;
   nextblockhash: string;
+  interval: number; 
 }

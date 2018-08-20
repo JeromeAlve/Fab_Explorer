@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Block, Chain, Tx, UTXO } from '../models';
+import { Block, Chain, Tx, UTXO, ChainTip } from '../models';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, publishReplay } from 'rxjs/operators';
 import { CacheService } from './cache.service';
 
 @Injectable()
@@ -21,6 +21,11 @@ export class ApiService {
   getBlockHash(height: number): Observable<string> {
     console.log(`Loading block hash for height ${height}`);
     return this.http.get(`${this.fabAPIBase}/getblockhash/${height}`, {responseType: 'text'});
+  }
+
+  getChainTips(): Observable<ChainTip[]> {
+    console.log(`Loading chain tips`);
+    return this.http.get<ChainTip[]>(`${this.fabAPIBase}/getchaintips`);
   }
 
   getAddressUTXOs(address: string): Observable<UTXO[]> {

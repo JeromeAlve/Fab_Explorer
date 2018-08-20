@@ -27,7 +27,11 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/app/pages/monitoring/js/moment.js",
+              "src/app/pages/monitoring/js/Chart.js",
+              "src/app/pages/monitoring/js/chartjs-plugin-streaming.js"
+            ]
           },
           "configurations": {
             "main": {

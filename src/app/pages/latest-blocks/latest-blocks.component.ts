@@ -15,7 +15,7 @@ export class LatestBlocksComponent implements OnInit, OnDestroy {
 
   loading = true;
   displayedBlocks: Block[] = [];
-  displayBlockNum = 5;
+  displayBlockNum = 6;
 
   constructor(
     private state: StateService,
@@ -105,7 +105,7 @@ export class LatestBlocksComponent implements OnInit, OnDestroy {
     return found.hash;
   }
 
-  private async getBlocks(blockHash: string, numBlocks: number = 5) {
+  private async getBlocks(blockHash: string, numBlocks: number = 6) {
     if (numBlocks > 0) {
       this.loading = true;
       this.api.getBlockInfo(blockHash).subscribe(block => {

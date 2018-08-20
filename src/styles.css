@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Titillium+Web');
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
+
 html * {
   font-family: Titillium Web, sans-serif;
 }
