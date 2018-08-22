@@ -249,67 +249,70 @@ export class MonitoringComponent implements OnInit, OnDestroy {
             }
           });
 
+
+          this.getChainTips();
+          this.chainLabels = new Array(50);
+          this.chainData = new Array(50);
+
+          for(var i = 0; i<50; i++){
+            this.chainLabels[49-i] = this.chainTips[i+this.curTip].height;
+            this.chainData[49-i] = this.chainTips[i+this.curTip].branchlen;
+          }
+
+          this.chart3.destroy();
+
+          const canvas3 = <HTMLCanvasElement>document.getElementById("tipsChart");
+          var context3 = canvas3.getContext("2d");
+              this.chart3 = new Chart(context3, {
+                type: 'bar',
+                data: {
+                  labels: this.chainLabels,
+                  datasets: [{
+                    label: "chainTips",
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: "rgba(75,192,192,0.4)",
+                    borderColor: "rgba(75,192,192,1)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "rgba(75,192,192,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBorderColor: "rgba(75,192,192,1)",
+                    pointHoverBackgroundColor: "rgba(220,220,220,1)",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: this.chainData
+                  }]
+                },
+                options: {
+                  responsive: false,
+                  scales: {
+                    yAxes: [{
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Branch Length'
+                      }
+                    }],
+                    xAxes: [{
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Block Height'
+                      }
+                    }]
+                  }
+                }
+            });
           
-        }
+        }//end of if statement
 
   
 
-        this.chainLabels = new Array(50);
-        this.chainData = new Array(50);
-
-        for(var i = 0; i<50; i++){
-          this.chainLabels[49-i] = this.chainTips[i+this.curTip].height;
-          this.chainData[49-i] = this.chainTips[i+this.curTip].branchlen;
-        }
-
-        this.chart3.destroy();
-
-        const canvas3 = <HTMLCanvasElement>document.getElementById("tipsChart");
-        var context3 = canvas3.getContext("2d");
-            this.chart3 = new Chart(context3, {
-              type: 'bar',
-              data: {
-                labels: this.chainLabels,
-                datasets: [{
-                  label: "chainTips",
-                  fill: false,
-                  lineTension: 0.1,
-                  backgroundColor: "rgba(75,192,192,0.4)",
-                  borderColor: "rgba(75,192,192,1)",
-                  borderCapStyle: 'butt',
-                  borderDash: [],
-                  borderDashOffset: 0.0,
-                  borderJoinStyle: 'miter',
-                  pointBorderColor: "rgba(75,192,192,1)",
-                  pointBackgroundColor: "#fff",
-                  pointBorderWidth: 1,
-                  pointHoverRadius: 5,
-                  pointHoverBorderColor: "rgba(75,192,192,1)",
-                  pointHoverBackgroundColor: "rgba(220,220,220,1)",
-                  pointHoverBorderWidth: 2,
-                  pointRadius: 1,
-                  pointHitRadius: 10,
-                  data: this.chainData
-                }]
-              },
-              options: {
-                responsive: false,
-                scales: {
-                  yAxes: [{
-                    scaleLabel: {
-                      display: true,
-                      labelString: 'Branch Length'
-                    }
-                  }],
-                  xAxes: [{
-                    scaleLabel: {
-                      display: true,
-                      labelString: 'Block Height'
-                    }
-                  }]
-                }
-              }
-          });
+        
 
       });
   }
