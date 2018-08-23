@@ -48,7 +48,6 @@
 
 <div>
   <canvas id="difficultyChart" width="800" height="600"></canvas>
-  <!--canvas id="myChart" width="1200" height="400"></canvas-->
 </div>
 
 <br><br>
@@ -69,6 +68,18 @@
 </div>
 
 
+<div id="table-wrapper">
+  <div id="table-scroll">
+    <table class="zui-table" width="700" height="600">
+       <thead><th>Critical Forks</th> <th>Length</th></thead>
+        <tr *ngFor="let list of bigForks" style="overflow-y: auto;">
+          <td>{{list.height}}</td>
+          <td>{{list.branchlen}}</td>
+        </tr>
+    </table>
+  </div>
+</div>
+  
 
 
 <br><br>

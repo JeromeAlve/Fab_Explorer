@@ -21,6 +21,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   intBlockNum = 200;
 
   chainTips: ChainTip[] = [];
+  bigForks: ChainTip[] = []; //array containing block heights and where suspicious forks occur and the length of the tip (chaintip length > 5)
   diff = 0;
   diff2 = 0;
   diffList = [];
@@ -461,6 +462,10 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     for(var i = 0; i<50; i++){
       this.chainLabels[49-i] = this.chainTips[i+this.curTip].height;
       this.chainData[49-i] = this.chainTips[i+this.curTip].branchlen;
+
+      if(this.chainTips[i+this.curTip].branchlen > 5){
+        this.bigForks.push(this.chainTips[i+this.curTip]);
+      }
     }
     this.chart3.update();
 
@@ -642,6 +647,10 @@ export class MonitoringComponent implements OnInit, OnDestroy {
         for(var i = 0; i<50; i++){
           this.chainLabels[49-i] = this.chainTips[i+this.curTip].height;
           this.chainData[49-i] = this.chainTips[i+this.curTip].branchlen;
+
+          if(this.chainTips[i+this.curTip].branchlen > 5){
+              this.bigForks.push(this.chainTips[i+this.curTip]);
+          }
         }
 
         const canvas3 = <HTMLCanvasElement>document.getElementById("tipsChart");
